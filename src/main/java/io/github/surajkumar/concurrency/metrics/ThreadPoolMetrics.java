@@ -39,10 +39,13 @@ public class ThreadPoolMetrics {
 
     @Override
     public String toString() {
-        return "ThreadPoolMetrics{" +
-                "initialCapacity=" + initialCapacity +
-                ", activeThreads=" + activeThreads +
-                ", availableThreads=" + availableThreads +
-                '}';
+        return "ThreadPoolMetrics{"
+                + "initialCapacity="
+                + initialCapacity
+                + ", activeThreads="
+                + activeThreads
+                + ", availableThreads="
+                + availableThreads
+                + '}';
     }
 }

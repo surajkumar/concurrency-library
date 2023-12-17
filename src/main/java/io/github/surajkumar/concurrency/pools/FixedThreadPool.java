@@ -1,8 +1,9 @@
 package io.github.surajkumar.concurrency.pools;
 
 import io.github.surajkumar.concurrency.exceptions.ExecutionMachineShutdownException;
-import io.github.surajkumar.concurrency.threads.ExecutionThread;
 import io.github.surajkumar.concurrency.metrics.ThreadPoolMetrics;
+import io.github.surajkumar.concurrency.threads.ExecutionThread;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,7 @@ public class FixedThreadPool implements ThreadPool {
 
     public FixedThreadPool(Pool pool) {
         this.pool = pool;
-        for(int i = 0; i < pool.getInitialCapacity(); i++) {
+        for (int i = 0; i < pool.getInitialCapacity(); i++) {
             pool.add(ExecutionThread.createStarted());
         }
         threadPoolMetrics.setInitialCapacity(pool.getInitialCapacity());
@@ -25,12 +26,12 @@ public class FixedThreadPool implements ThreadPool {
 
     @Override
     public ExecutionThread borrow() {
-        if(!running.get()) {
+        if (!running.get()) {
             throw new ExecutionMachineShutdownException();
         }
         threadPoolMetrics.setAvailableThreads(threadPoolMetrics.getAvailableThreads() - 1);
         threadPoolMetrics.setActiveThreads(threadPoolMetrics.getActiveThreads() + 1);
-        if(pool.getPoolOptions().isWaitFor()) {
+        if (pool.getPoolOptions().isWaitFor()) {
             return pool.take();
         } else {
             return pool.get();
@@ -39,8 +40,10 @@ public class FixedThreadPool implements ThreadPool {
 
     @Override
     public void returnToPool(ExecutionThread executionThread) {
-        if(!running.get()) {
-            LOGGER.warn("ExecutionMachine has been shutdown but received a returnToPool request. Retiring ExecutionThread");
+        if (!running.get()) {
+            LOGGER.warn(
+                    "ExecutionMachine has been shutdown but received a returnToPool request."
+                            + " Retiring ExecutionThread");
             executionThread.setRunning(false);
             return;
         }
@@ -60,9 +63,11 @@ public class FixedThreadPool implements ThreadPool {
             executionThread.setRunning(false);
             executionThread.getThread().interrupt();
         }
-        pool.getLoaned().forEach(t -> {
-            t.setRunning(false);
-        });
+        pool.getLoaned()
+                .forEach(
+                        t -> {
+                            t.setRunning(false);
+                        });
         pool.getLoaned().clear();
     }
 

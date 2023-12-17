@@ -5,5 +5,4 @@ public class ExecutionThreadRetiredException extends RuntimeException {
     public ExecutionThreadRetiredException() {
         super("ExecutionThread has retired");
     }
-
 }

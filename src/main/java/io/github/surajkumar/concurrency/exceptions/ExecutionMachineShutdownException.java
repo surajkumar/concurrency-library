@@ -5,5 +5,4 @@ public class ExecutionMachineShutdownException extends RuntimeException {
     public ExecutionMachineShutdownException() {
         super("ExecutionMachine is shutdown");
     }
-
 }

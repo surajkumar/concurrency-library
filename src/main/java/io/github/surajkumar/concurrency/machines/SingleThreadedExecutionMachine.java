@@ -1,25 +1,25 @@
 package io.github.surajkumar.concurrency.machines;
 
 import io.github.surajkumar.concurrency.exceptions.NoExecutionThreadAvailableException;
+import io.github.surajkumar.concurrency.pools.FixedThreadPool;
 import io.github.surajkumar.concurrency.pools.Pool;
 import io.github.surajkumar.concurrency.pools.PoolOptions;
+import io.github.surajkumar.concurrency.pools.ThreadPool;
+import io.github.surajkumar.concurrency.promise.Promise;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
-import io.github.surajkumar.concurrency.promise.Promise;
-import io.github.surajkumar.concurrency.pools.FixedThreadPool;
-import io.github.surajkumar.concurrency.pools.ThreadPool;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SingleThreadedExecutionMachine implements ExecutionMachine {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SingleThreadedExecutionMachine.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(SingleThreadedExecutionMachine.class);
     private final ThreadPool threadPool;
 
     public SingleThreadedExecutionMachine() {
-        PoolOptions options = new PoolOptions()
-                .setWaitFor(true)
-                .setEnableScaling(false)
-                .setMaxCapacity(1);
+        PoolOptions options =
+                new PoolOptions().setWaitFor(true).setEnableScaling(false).setMaxCapacity(1);
         threadPool = new FixedThreadPool(new Pool(1, options));
     }
 
@@ -27,8 +27,8 @@ public class SingleThreadedExecutionMachine implements ExecutionMachine {
     public void execute(Promise<?> promise, ExecutionSettings executionSettings) {
         LOGGER.debug("Executing promise {}", promise);
         ExecutionThread executionThread = threadPool.borrow();
-        if(executionThread != null) {
-            if(executionSettings.getName() == null) {
+        if (executionThread != null) {
+            if (executionSettings.getName() == null) {
                 executionSettings.setName("SingleThreadedExecution");
             }
             executionThread.addWatcher(this);
@@ -58,10 +58,11 @@ public class SingleThreadedExecutionMachine implements ExecutionMachine {
     @Override
     public void onExecutionThreadRetirement(ExecutionThread executionThread) {
         LOGGER.warn("{} has retired, spawning a new instance", executionThread);
-        if(threadPool.isShutdown()) {
+        if (threadPool.isShutdown()) {
             LOGGER.warn("ThreadPool has been shutdown so cannot spawn a new instance");
         } else {
-            threadPool.returnToPool(ExecutionThread.createStarted("SingleExecutionThreadRespawned"));
+            threadPool.returnToPool(
+                    ExecutionThread.createStarted("SingleExecutionThreadRespawned"));
         }
     }
 }

@@ -29,10 +29,13 @@ public class ExecutionThreadMetrics {
 
     @Override
     public String toString() {
-        return "ExecutionThreadMetrics{" +
-                "totalPromises=" + totalPromises +
-                ", completedPromises=" + completedPromises +
-                ", failedPromises=" + failedPromises +
-                '}';
+        return "ExecutionThreadMetrics{"
+                + "totalPromises="
+                + totalPromises
+                + ", completedPromises="
+                + completedPromises
+                + ", failedPromises="
+                + failedPromises
+                + '}';
     }
 }

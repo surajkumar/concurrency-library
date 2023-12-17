@@ -46,7 +46,7 @@ public class PromiseMetrics {
     }
 
     public long getExecutionTime() {
-        if(start > 0 && end > 0) {
+        if (start > 0 && end > 0) {
             return end - start;
         }
         return -1;
@@ -61,7 +61,7 @@ public class PromiseMetrics {
     }
 
     public String getErrorDetails() {
-        if(isSuccess()) {
+        if (isSuccess()) {
             return "";
         }
         return errorDetails;
@@ -72,7 +72,7 @@ public class PromiseMetrics {
     }
 
     public StackTraceElement[] getStackTrace() {
-        if(isSuccess()) {
+        if (isSuccess()) {
             return new StackTraceElement[0];
         }
         return stackTrace;
@@ -84,15 +84,22 @@ public class PromiseMetrics {
 
     @Override
     public String toString() {
-        return "PromiseMetrics{" +
-                "start=" + start +
-                ", end=" + end +
-                ", success=" + success +
-                ", executionTime=" + getExecutionTime() +
-                ", memoryUsage=" + memoryUsage +
-                ", errorDetails='" + getErrorDetails() + '\'' +
-                ", stackTrace=" + Arrays.toString(getStackTrace()) +
-                '}';
+        return "PromiseMetrics{"
+                + "start="
+                + start
+                + ", end="
+                + end
+                + ", success="
+                + success
+                + ", executionTime="
+                + getExecutionTime()
+                + ", memoryUsage="
+                + memoryUsage
+                + ", errorDetails='"
+                + getErrorDetails()
+                + '\''
+                + ", stackTrace="
+                + Arrays.toString(getStackTrace())
+                + '}';
     }
-
 }

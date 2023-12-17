@@ -2,6 +2,7 @@ package io.github.surajkumar.concurrency.threads;
 
 import io.github.surajkumar.concurrency.metrics.ExecutionThreadMetrics;
 import io.github.surajkumar.concurrency.promise.Promise;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,14 +27,17 @@ public class ExecutionVirtualThread extends ExecutionThread {
         metrics.incrementTotalPromises();
         LOGGER.trace("Running promise {}", promise);
         notifyWatcherOfRunning(promise);
-        if(executionSettings != null) {
-            if(executionSettings.getInitialStartDelay() > 0 || executionSettings.getDelayBetween() > 0) {
-                LOGGER.warn("Delays are not allowed within a ExecutionVirtualThread and will be ignored");
+        if (executionSettings != null) {
+            if (executionSettings.getInitialStartDelay() > 0
+                    || executionSettings.getDelayBetween() > 0) {
+                LOGGER.warn(
+                        "Delays are not allowed within a ExecutionVirtualThread and will be"
+                                + " ignored");
             }
             int repeat = executionSettings.getRepeat();
-            while(repeat >= 0 || executionSettings.isRepeatIndefinitely()) {
+            while (repeat >= 0 || executionSettings.isRepeatIndefinitely()) {
                 promise.complete();
-                if(!executionSettings.isRepeatIndefinitely()) {
+                if (!executionSettings.isRepeatIndefinitely()) {
                     repeat--;
                 }
             }

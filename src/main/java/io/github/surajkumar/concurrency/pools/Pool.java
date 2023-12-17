@@ -1,6 +1,7 @@
 package io.github.surajkumar.concurrency.pools;
 
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,38 +41,41 @@ public class Pool {
 
     public ExecutionThread get() {
         ExecutionThread executionThread = queue.poll();
-        if(executionThread != null) {
+        if (executionThread != null) {
             loaned.add(executionThread);
         }
         return executionThread;
     }
 
     public void add(ExecutionThread executionThread) {
-        if(executionThread != null) {
+        if (executionThread != null) {
             queue.add(executionThread);
             loaned.remove(executionThread);
         }
     }
 
     public void remove(ExecutionThread executionThread) {
-        if(executionThread != null) {
+        if (executionThread != null) {
             queue.remove(executionThread);
             loaned.remove(executionThread);
         }
     }
 
     public void scaleUp() {
-        if(!poolOptions.isEnableScaling()) {
+        if (!poolOptions.isEnableScaling()) {
             return;
         }
-        if(currentCapacity == poolOptions.getMaxCapacity()) {
+        if (currentCapacity == poolOptions.getMaxCapacity()) {
             LOGGER.trace("Pool is at max capacity");
             return;
         }
 
-        int scale = Math.min(poolOptions.getMaxCapacity() - currentCapacity, poolOptions.getScaleUpAmount());
+        int scale =
+                Math.min(
+                        poolOptions.getMaxCapacity() - currentCapacity,
+                        poolOptions.getScaleUpAmount());
 
-        for(int i = 0; i < scale; i++) {
+        for (int i = 0; i < scale; i++) {
             ExecutionThread thread = new ExecutionThread();
             thread.setRunning(true);
             add(thread);
@@ -80,12 +84,12 @@ public class Pool {
     }
 
     public void scaleDown() {
-        if(!poolOptions.isEnableScaling()) {
+        if (!poolOptions.isEnableScaling()) {
             return;
         }
         int scale = Math.max(0, currentCapacity - poolOptions.getScaleDownAmount());
-        for(int i = 0; i < scale; i++) {
-            if(queue.peek() != null) {
+        for (int i = 0; i < scale; i++) {
+            if (queue.peek() != null) {
                 ExecutionThread thread = queue.poll();
                 thread.setRunning(false);
                 remove(thread);

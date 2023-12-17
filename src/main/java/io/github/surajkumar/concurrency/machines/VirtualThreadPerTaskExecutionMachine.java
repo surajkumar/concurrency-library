@@ -7,15 +7,18 @@ import io.github.surajkumar.concurrency.threads.ExecutionPair;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
 import io.github.surajkumar.concurrency.threads.ExecutionVirtualThread;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
-    private static final Logger LOGGER = LoggerFactory.getLogger(VirtualThreadPerTaskExecutionMachine.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(VirtualThreadPerTaskExecutionMachine.class);
 
     @Override
     public void execute(Promise<?> promise, ExecutionSettings executionSettings) {
-        ExecutionVirtualThread executionThread = new ExecutionVirtualThread(new ExecutionPair(promise, executionSettings));
+        ExecutionVirtualThread executionThread =
+                new ExecutionVirtualThread(new ExecutionPair(promise, executionSettings));
         executionThread.addWatcher(this);
         Thread.ofVirtual().start(executionThread);
     }
@@ -40,6 +43,7 @@ public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
 
     @Override
     public void onExecutionThreadRetirement(ExecutionThread executionThread) {
-        LOGGER.debug("ExecutionThread Retired, Execution Metrics: {}", executionThread.getMetrics());
+        LOGGER.debug(
+                "ExecutionThread Retired, Execution Metrics: {}", executionThread.getMetrics());
     }
 }

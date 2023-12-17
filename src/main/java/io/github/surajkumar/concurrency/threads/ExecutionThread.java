@@ -3,6 +3,7 @@ package io.github.surajkumar.concurrency.threads;
 import io.github.surajkumar.concurrency.exceptions.ExecutionThreadRetiredException;
 import io.github.surajkumar.concurrency.metrics.ExecutionThreadMetrics;
 import io.github.surajkumar.concurrency.promise.Promise;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public class ExecutionThread implements Runnable {
     @Override
     public void run() {
         LOGGER.trace(this + " running");
-        while(running.get() && !thread.isInterrupted()) {
+        while (running.get() && !thread.isInterrupted()) {
             ExecutionPair executionPair;
             try {
                 executionPair = queue.take();
@@ -37,13 +38,13 @@ public class ExecutionThread implements Runnable {
             metrics.incrementTotalPromises();
             LOGGER.trace("Running promise {}", promise);
             notifyWatcherOfRunning(promise);
-            if(executionSettings != null) {
+            if (executionSettings != null) {
                 sleep(executionSettings.getInitialStartDelay());
                 int repeat = executionSettings.getRepeat();
-                while(isRunning() && (repeat >= 0 || executionSettings.isRepeatIndefinitely())) {
+                while (isRunning() && (repeat >= 0 || executionSettings.isRepeatIndefinitely())) {
                     sleep(executionSettings.getDelayBetween());
                     promise.complete();
-                    if(!executionSettings.isRepeatIndefinitely()) {
+                    if (!executionSettings.isRepeatIndefinitely()) {
                         repeat--;
                     }
                 }
@@ -93,7 +94,7 @@ public class ExecutionThread implements Runnable {
     }
 
     public void addWatcher(ExecutionThreadWatcher watcher) {
-        if(!isRunning()) {
+        if (!isRunning()) {
             throw new ExecutionThreadRetiredException();
         }
         synchronized (watchers) {
@@ -112,7 +113,7 @@ public class ExecutionThread implements Runnable {
     }
 
     public void queuePromise(Promise<?> promise, ExecutionSettings executionSettings) {
-        if(!isRunning()) {
+        if (!isRunning()) {
             throw new ExecutionThreadRetiredException();
         }
         queue.add(new ExecutionPair(promise, executionSettings));

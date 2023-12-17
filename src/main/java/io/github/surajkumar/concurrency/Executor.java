@@ -6,6 +6,7 @@ import io.github.surajkumar.concurrency.machines.SingleThreadedExecutionMachine;
 import io.github.surajkumar.concurrency.pools.ThreadPool;
 import io.github.surajkumar.concurrency.promise.Promise;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class Executor {
 
     public void join(Promise<?>... promises) {
         run(promises);
-        for(Promise<?> p : promises) {
+        for (Promise<?> p : promises) {
             p.get();
         }
     }
@@ -43,7 +44,7 @@ public class Executor {
             LOGGER.warn("No promises provided to run.");
             return;
         }
-        for(Promise<?> p : promises) {
+        for (Promise<?> p : promises) {
             LOGGER.trace("Sending {} to {}", p, executionMachine);
             executionMachine.execute(p, executionSettings);
         }
@@ -51,7 +52,7 @@ public class Executor {
 
     public void shutdown() {
         ThreadPool threadPool = executionMachine.getThreadPool();
-        if(threadPool != null) {
+        if (threadPool != null) {
             executionMachine.getThreadPool().shutdown();
         }
     }

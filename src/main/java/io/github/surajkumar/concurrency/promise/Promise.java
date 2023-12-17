@@ -15,7 +15,10 @@ public class Promise<T> {
         this(task, null, null);
     }
 
-    public Promise(Task<T> task, PromiseHandler<T> resultHandler, PromiseHandler<Exception> exceptionHandler) {
+    public Promise(
+            Task<T> task,
+            PromiseHandler<T> resultHandler,
+            PromiseHandler<Exception> exceptionHandler) {
         this.task = task;
         this.resultHandler = resultHandler;
         this.exceptionHandler = exceptionHandler;
@@ -40,7 +43,8 @@ public class Promise<T> {
     public void complete() {
         metrics.clear();
         try {
-            long startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+            long startMemory =
+                    Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             result = task.run();
             finished = true;
             synchronized (this) {
@@ -51,21 +55,21 @@ public class Promise<T> {
             metrics.setEnd(System.nanoTime());
             metrics.setSuccess(true);
             metrics.setMemoryUsage(endMemory - startMemory);
-            if(resultHandler != null) {
+            if (resultHandler != null) {
                 resultHandler.handle(result);
             }
         } catch (Exception ex) {
             metrics.setSuccess(false);
             metrics.setStackTrace(ex);
             metrics.setErrorDetails(ex.getMessage());
-            if(exceptionHandler != null) {
+            if (exceptionHandler != null) {
                 exceptionHandler.handle(ex);
             }
         }
     }
 
     public T get() {
-        if(result != null) {
+        if (result != null) {
             return result;
         }
         synchronized (this) {

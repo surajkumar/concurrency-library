@@ -12,18 +12,19 @@ public class Channel<T> {
     public void sendMessage(Message<T> message) {
         metrics.incrementSentMessages();
         synchronized (observers) {
-            observers.forEach(observer -> {
-                if (message.getSender() != observer) {
-                    observer.onMessageReceived(this, message);
-                }
-            });
+            observers.forEach(
+                    observer -> {
+                        if (message.getSender() != observer) {
+                            observer.onMessageReceived(this, message);
+                        }
+                    });
         }
     }
 
     public void sendMessage(Message<T> message, ChannelObserver<T> recipient) {
         synchronized (observers) {
-            for(ChannelObserver<T> observer : observers) {
-                if(observer == recipient) {
+            for (ChannelObserver<T> observer : observers) {
+                if (observer == recipient) {
                     observer.onMessageReceived(this, message);
                     break;
                 }
