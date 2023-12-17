@@ -47,6 +47,31 @@ publishing {
             groupId = 'io.github.surajkumar'
             artifactId = 'concurrency-library'
             version = '1.0.0'
+
+            // POM configuration
+            pom {
+                name = 'Concurrency Library'
+                description = 'A library for concurrent programming'
+                url = 'https://github.com/surajkumar/concurrency-library'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'surajkumar'
+                        name = 'Suraj Kumar'
+                        email = '76599223+surajkumar@users.noreply.github.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/surajkumar/concurrency-library.git'
+                    developerConnection = 'scm:git:ssh://github.com/surajkumar/concurrency-library.git'
+                    url = 'https://github.com/surajkumar/concurrency-library'
+                }
+            }
         }
     }
 
