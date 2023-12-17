@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * The ExecutionVirtualThread class represents a virtual thread that executes promises.
- * It extends the ExecutionThread class and provides methods to manage the execution and lifecycle of the virtual thread.
+ * The ExecutionVirtualThread class represents a virtual thread that executes promises. It extends
+ * the ExecutionThread class and provides methods to manage the execution and lifecycle of the
+ * virtual thread.
  */
 public class ExecutionVirtualThread extends ExecutionThread {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionVirtualThread.class);

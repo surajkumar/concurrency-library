@@ -18,7 +18,7 @@ public class Channel<T> {
      * Sends a message to all registered observers of the channel.
      *
      * @param message The message to be sent.
-     * @param <T>     The type of the message content.
+     * @param <T> The type of the message content.
      */
     public void sendMessage(Message<T> message) {
         metrics.incrementSentMessages();
@@ -35,9 +35,9 @@ public class Channel<T> {
     /**
      * Sends a message to the specified recipient observer in the channel.
      *
-     * @param message   The message to be sent.
+     * @param message The message to be sent.
      * @param recipient The recipient observer to receive the message.
-     * @param <T>       The type of the message content.
+     * @param <T> The type of the message content.
      */
     public void sendMessage(Message<T> message, ChannelObserver<T> recipient) {
         synchronized (observers) {
@@ -54,7 +54,7 @@ public class Channel<T> {
      * Registers a {@link ChannelObserver} to receive messages from the channel.
      *
      * @param channelObserver The observer to be registered.
-     * @param <T>             The type of the message content.
+     * @param <T> The type of the message content.
      */
     public void register(ChannelObserver<T> channelObserver) {
         synchronized (observers) {
@@ -67,7 +67,7 @@ public class Channel<T> {
      * Deregisters a {@link ChannelObserver} from receiving messages from the channel.
      *
      * @param channelObserver The observer to be deregistered.
-     * @param <T>             The type of the message content.
+     * @param <T> The type of the message content.
      */
     public void deregister(ChannelObserver<T> channelObserver) {
         synchronized (observers) {

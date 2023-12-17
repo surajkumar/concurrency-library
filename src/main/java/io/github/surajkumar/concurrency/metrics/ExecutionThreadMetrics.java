@@ -3,8 +3,8 @@ package io.github.surajkumar.concurrency.metrics;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * The ExecutionThreadMetrics class represents the metrics of an execution thread.
- * It keeps track of the total number of promises, completed promises, and failed promises.
+ * The ExecutionThreadMetrics class represents the metrics of an execution thread. It keeps track of
+ * the total number of promises, completed promises, and failed promises.
  */
 public class ExecutionThreadMetrics {
     private final AtomicLong totalPromises = new AtomicLong();
@@ -25,7 +25,8 @@ public class ExecutionThreadMetrics {
     }
 
     /**
-     * Retrieves the total number of completed promises tracked by the ExecutionThreadMetrics object.
+     * Retrieves the total number of completed promises tracked by the ExecutionThreadMetrics
+     * object.
      *
      * @return The total number of completed promises as a long value.
      */

@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The {@code ThreadPerTaskExecutionMachine} class is an implementation of the {@link ExecutionMachine} interface
- * that executes each task in a separate thread.
+ * The {@code ThreadPerTaskExecutionMachine} class is an implementation of the {@link
+ * ExecutionMachine} interface that executes each task in a separate thread.
  */
 public class ThreadPerTaskExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER =

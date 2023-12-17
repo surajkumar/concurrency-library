@@ -1,9 +1,9 @@
 package io.github.surajkumar.concurrency.threads;
 
 /**
- * The ExecutionSettings class represents the settings for executing a task.
- * It specifies the initial start delay of the task, the delay between successive executions,
- * the number of times the task should be repeated, and whether the task should be repeated indefinitely.
+ * The ExecutionSettings class represents the settings for executing a task. It specifies the
+ * initial start delay of the task, the delay between successive executions, the number of times the
+ * task should be repeated, and whether the task should be repeated indefinitely.
  */
 public class ExecutionSettings {
     private String name;

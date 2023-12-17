@@ -14,8 +14,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * The ExecutionThread class represents a thread that executes promises.
- * It implements the Runnable interface and provides methods to manage the execution and lifecycle of the thread.
+ * The ExecutionThread class represents a thread that executes promises. It implements the Runnable
+ * interface and provides methods to manage the execution and lifecycle of the thread.
  */
 public class ExecutionThread implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionThread.class);
@@ -26,10 +26,10 @@ public class ExecutionThread implements Runnable {
     private Thread thread;
 
     /**
-     * This method represents the execution logic of the ExecutionThread.
-     * It runs the thread until it is interrupted or the running flag is set to false.
-     * It retrieves ExecutionPair objects from the queue, executes the associated Promise,
-     * and updates the execution metrics accordingly.
+     * This method represents the execution logic of the ExecutionThread. It runs the thread until
+     * it is interrupted or the running flag is set to false. It retrieves ExecutionPair objects
+     * from the queue, executes the associated Promise, and updates the execution metrics
+     * accordingly.
      */
     @Override
     public void run() {
@@ -104,8 +104,8 @@ public class ExecutionThread implements Runnable {
     }
 
     /**
-     * Adds a {@link ExecutionThreadWatcher} to the list of registered watchers.
-     * If the execution thread is not running, it throws an {@link ExecutionThreadRetiredException}.
+     * Adds a {@link ExecutionThreadWatcher} to the list of registered watchers. If the execution
+     * thread is not running, it throws an {@link ExecutionThreadRetiredException}.
      *
      * @param watcher the {@link ExecutionThreadWatcher} to add
      * @throws ExecutionThreadRetiredException if the execution thread is not running
@@ -135,10 +135,10 @@ public class ExecutionThread implements Runnable {
     }
 
     /**
-     * Adds a promise to the execution queue with the specified execution settings.
-     * If the execution thread is not running, it throws an ExecutionThreadRetiredException.
+     * Adds a promise to the execution queue with the specified execution settings. If the execution
+     * thread is not running, it throws an ExecutionThreadRetiredException.
      *
-     * @param promise           the promise to add to the queue
+     * @param promise the promise to add to the queue
      * @param executionSettings the execution settings for the promise
      * @throws ExecutionThreadRetiredException if the execution thread is not running
      */

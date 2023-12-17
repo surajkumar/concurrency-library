@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The PooledExecutionMachine class implements the ExecutionMachine interface.
- * It uses a ThreadPool to execute Promise instances.
+ * The PooledExecutionMachine class implements the ExecutionMachine interface. It uses a ThreadPool
+ * to execute Promise instances.
  */
 public class PooledExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER = LoggerFactory.getLogger(PooledExecutionMachine.class);

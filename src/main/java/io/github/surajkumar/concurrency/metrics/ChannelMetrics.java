@@ -4,8 +4,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * The ChannelMetrics class is responsible for tracking metrics related to a Channel.
- * It keeps track of the number of sent messages and the number of registered observers.
+ * The ChannelMetrics class is responsible for tracking metrics related to a Channel. It keeps track
+ * of the number of sent messages and the number of registered observers.
  */
 public class ChannelMetrics {
     private final AtomicLong sentMessages = new AtomicLong(0);

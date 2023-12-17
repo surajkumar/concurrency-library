@@ -9,9 +9,7 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-/**
- * Pool represents a thread pool that manages ExecutionThreads for executing promises.
- */
+/** Pool represents a thread pool that manages ExecutionThreads for executing promises. */
 public class Pool {
     private static final Logger LOGGER = LoggerFactory.getLogger(Pool.class);
     private final BlockingQueue<ExecutionThread> queue = new LinkedBlockingQueue<>();
@@ -20,9 +18,7 @@ public class Pool {
     private int currentCapacity;
     private final PoolOptions poolOptions;
 
-    /**
-     * Represents a pool of execution threads with specified initial capacity and pool options.
-     */
+    /** Represents a pool of execution threads with specified initial capacity and pool options. */
     public Pool(int initialCapacity, PoolOptions poolOptions) {
         this.initialCapacity = initialCapacity;
         this.currentCapacity = initialCapacity;
@@ -39,11 +35,11 @@ public class Pool {
     }
 
     /**
-     * Retrieves an ExecutionThread from the queue.
-     * If no thread is currently available in the queue, the method waits until a thread becomes available.
+     * Retrieves an ExecutionThread from the queue. If no thread is currently available in the
+     * queue, the method waits until a thread becomes available.
      *
-     * @return the retrieved ExecutionThread
-     *         or null if the method is interrupted while waiting for a thread
+     * @return the retrieved ExecutionThread or null if the method is interrupted while waiting for
+     *     a thread
      */
     public ExecutionThread take() {
         try {
@@ -58,10 +54,11 @@ public class Pool {
     }
 
     /**
-     * Retrieves an ExecutionThread from the queue.
-     * If no thread is currently available in the queue, the method waits until a thread becomes available.
+     * Retrieves an ExecutionThread from the queue. If no thread is currently available in the
+     * queue, the method waits until a thread becomes available.
      *
-     * @return the retrieved ExecutionThread or null if the method is interrupted while waiting for a thread
+     * @return the retrieved ExecutionThread or null if the method is interrupted while waiting for
+     *     a thread
      */
     public ExecutionThread get() {
         ExecutionThread executionThread = queue.poll();
@@ -97,34 +94,33 @@ public class Pool {
 
     /**
      * Increases the capacity of the pool by creating and adding new ExecutionThread instances.
-     * However, if scaling is disabled in the pool options or the pool is already at maximum capacity,
-     * the method does nothing.
+     * However, if scaling is disabled in the pool options or the pool is already at maximum
+     * capacity, the method does nothing.
      */
     public void scaleUp() {
         if (!poolOptions.isEnableScaling()) {
             return;
         }
-        if (currentCapacity == poolOptions.getMaxCapacity()) {
+        if (currentCapacity >= poolOptions.getMaxCapacity()) {
             LOGGER.trace("Pool is at max capacity");
             return;
         }
 
-        int scale =
-                Math.min(
-                        poolOptions.getMaxCapacity() - currentCapacity,
-                        poolOptions.getScaleUpAmount());
+        int scale = poolOptions.getScaleUpAmount();
+        if(scale + currentCapacity > poolOptions.getMaxCapacity() && poolOptions.getMaxCapacity() > 0) {
+            scale = Math.min(poolOptions.getMaxCapacity() - currentCapacity, poolOptions.getScaleUpAmount());
+        }
 
         for (int i = 0; i < scale; i++) {
-            ExecutionThread thread = new ExecutionThread();
-            thread.setRunning(true);
+            ExecutionThread thread = ExecutionThread.createStarted();
             add(thread);
         }
         currentCapacity += scale;
     }
 
     /**
-     * Scales down the pool by removing ExecutionThreads from the queue.
-     * If scaling is disabled or the scale down amount is greater than the current capacity, the method does nothing.
+     * Scales down the pool by removing ExecutionThreads from the queue. If scaling is disabled or
+     * the scale down amount is greater than the current capacity, the method does nothing.
      */
     public void scaleDown() {
         if (!poolOptions.isEnableScaling()) {

@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * The Executor class is responsible for executing promises asynchronously using an ExecutionMachine.
- * It provides various methods for running promises and managing their execution.
+ * The Executor class is responsible for executing promises asynchronously using an
+ * ExecutionMachine. It provides various methods for running promises and managing their execution.
  */
 public class Executor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Executor.class);

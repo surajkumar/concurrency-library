@@ -3,9 +3,9 @@ package io.github.surajkumar.concurrency.metrics;
 import java.util.Arrays;
 
 /**
- * The PromiseMetrics class represents the metrics of a Promise execution.
- * It provides methods to access and manipulate various metrics such as start time, end time,
- * success status, execution time, memory usage, error details, and stack trace.
+ * The PromiseMetrics class represents the metrics of a Promise execution. It provides methods to
+ * access and manipulate various metrics such as start time, end time, success status, execution
+ * time, memory usage, error details, and stack trace.
  */
 public class PromiseMetrics {
     private long start;
@@ -18,8 +18,8 @@ public class PromiseMetrics {
     public PromiseMetrics() {}
 
     /**
-     * Clears the metrics of a Promise execution. This method resets the start time,
-     * end time, success status, memory usage, error details, and stack trace.
+     * Clears the metrics of a Promise execution. This method resets the start time, end time,
+     * success status, memory usage, error details, and stack trace.
      */
     public void clear() {
         start = 0;
@@ -72,8 +72,8 @@ public class PromiseMetrics {
     /**
      * Retrieves the execution time of the Promise execution.
      *
-     * @return The execution time of the Promise execution in nanoseconds.
-     *         Returns -1 if the start time or end time is not set.
+     * @return The execution time of the Promise execution in nanoseconds. Returns -1 if the start
+     *     time or end time is not set.
      */
     public long getExecutionTime() {
         if (start > 0 && end > 0) {
@@ -101,9 +101,11 @@ public class PromiseMetrics {
     }
 
     /**
-     * Retrieves the error details of the Promise execution. If the Promise execution is successful, an empty string is returned.
+     * Retrieves the error details of the Promise execution. If the Promise execution is successful,
+     * an empty string is returned.
      *
-     * @return The error details of the Promise execution. Returns an empty string if the Promise execution is successful.
+     * @return The error details of the Promise execution. Returns an empty string if the Promise
+     *     execution is successful.
      */
     public String getErrorDetails() {
         if (isSuccess()) {
@@ -120,7 +122,7 @@ public class PromiseMetrics {
      * Retrieves the stack trace of the Promise execution.
      *
      * @return The stack trace of the Promise execution as an array of StackTraceElement objects.
-     *         Returns an empty array if the Promise execution is successful.
+     *     Returns an empty array if the Promise execution is successful.
      */
     public StackTraceElement[] getStackTrace() {
         if (isSuccess()) {

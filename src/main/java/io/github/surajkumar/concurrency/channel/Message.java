@@ -35,9 +35,9 @@ public class Message<T> {
     /**
      * Creates a new message with the given content and sender.
      *
-     * @param <U>     The type of the message content.
+     * @param <U> The type of the message content.
      * @param content The content of the message.
-     * @param sender  The sender of the message.
+     * @param sender The sender of the message.
      * @return The newly created message.
      */
     public static <U> Message<U> createMessage(U content, ChannelObserver<U> sender) {

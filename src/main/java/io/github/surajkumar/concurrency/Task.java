@@ -1,8 +1,8 @@
 package io.github.surajkumar.concurrency;
 
 /**
- * The Task interface represents a task that can be executed by a Promise.
- * It defines a single method called run() that returns a result of type T.
+ * The Task interface represents a task that can be executed by a Promise. It defines a single
+ * method called run() that returns a result of type T.
  *
  * @param <T> the type of result returned by the task
  */

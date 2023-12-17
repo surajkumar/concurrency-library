@@ -1,8 +1,6 @@
 package io.github.surajkumar.concurrency.pools;
 
-/**
- * The PoolOptions class represents the options configuration for a pool of execution threads.
- */
+/** The PoolOptions class represents the options configuration for a pool of execution threads. */
 public class PoolOptions {
     private int maxCapacity;
     private boolean enableScaling;
@@ -86,8 +84,9 @@ public class PoolOptions {
     }
 
     /**
-     * Retrieves the value of the waitFor option in the PoolOptions.
-     * This option determines whether the borrow() method should wait for an ExecutionThread to be available or immediately return null if none are available.
+     * Retrieves the value of the waitFor option in the PoolOptions. This option determines whether
+     * the borrow() method should wait for an ExecutionThread to be available or immediately return
+     * null if none are available.
      *
      * @return true if the borrow() method should wait for an ExecutionThread, false otherwise
      */
@@ -96,8 +95,9 @@ public class PoolOptions {
     }
 
     /**
-     * Retrieves the value of the {@code waitFor} option in the PoolOptions. This option determines whether the {@code borrow()} method should wait for an ExecutionThread to be available
-     * or immediately return {@code null} if none are available.
+     * Retrieves the value of the {@code waitFor} option in the PoolOptions. This option determines
+     * whether the {@code borrow()} method should wait for an ExecutionThread to be available or
+     * immediately return {@code null} if none are available.
      *
      * @param waitFor the value to set for the {@code waitFor} option
      * @return the {@code PoolOptions} instance

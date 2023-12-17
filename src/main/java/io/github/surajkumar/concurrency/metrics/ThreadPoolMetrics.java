@@ -3,9 +3,11 @@ package io.github.surajkumar.concurrency.metrics;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * This class represents a set of metrics for a thread pool. It tracks the initial capacity, active threads, and available threads.
+ * This class represents a set of metrics for a thread pool. It tracks the initial capacity, active
+ * threads, and available threads.
  *
- * The metrics can be accessed through getters and modified through setters. The class also provides a method to clear all metrics.
+ * <p>The metrics can be accessed through getters and modified through setters. The class also
+ * provides a method to clear all metrics.
  */
 public class ThreadPoolMetrics {
     private final AtomicInteger initialCapacity = new AtomicInteger();
@@ -15,7 +17,7 @@ public class ThreadPoolMetrics {
     /**
      * Clears all metrics in the ThreadPoolMetrics object.
      *
-     * This method sets the initial capacity, active threads, and available threads metrics to 0.
+     * <p>This method sets the initial capacity, active threads, and available threads metrics to 0.
      */
     public void clear() {
         initialCapacity.set(0);
@@ -64,8 +66,8 @@ public class ThreadPoolMetrics {
     }
 
     /**
-     * Sets the number of available threads in the thread pool. This method should be used to update the available threads metric
-     * when a thread is borrowed from the pool.
+     * Sets the number of available threads in the thread pool. This method should be used to update
+     * the available threads metric when a thread is borrowed from the pool.
      *
      * @param availableThreads The new number of available threads in the thread pool
      */

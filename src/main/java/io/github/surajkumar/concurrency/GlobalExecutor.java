@@ -52,8 +52,8 @@ public class GlobalExecutor {
     }
 
     /**
-     * Retrieves an Executor that executes promises using a dynamic thread pool for execution.
-     * The dynamic thread pool can automatically scale up or down based on demand.
+     * Retrieves an Executor that executes promises using a dynamic thread pool for execution. The
+     * dynamic thread pool can automatically scale up or down based on demand.
      *
      * @return Returns the dynamic thread pool Executor.
      */

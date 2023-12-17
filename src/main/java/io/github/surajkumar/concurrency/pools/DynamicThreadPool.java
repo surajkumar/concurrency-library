@@ -14,8 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * DynamicThreadPool represents a dynamic thread pool that can be used to manage and borrow ExecutionThreads.
- * The pool dynamically scales up or down based on the demand and the specified pool options.
+ * DynamicThreadPool represents a dynamic thread pool that can be used to manage and borrow
+ * ExecutionThreads. The pool dynamically scales up or down based on the demand and the specified
+ * pool options.
  */
 public class DynamicThreadPool implements ThreadPool {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamicThreadPool.class);
@@ -28,7 +29,8 @@ public class DynamicThreadPool implements ThreadPool {
     private final Executor autoScalingExecutor = new Executor(new SingleThreadedExecutionMachine());
 
     /**
-     * A dynamic thread pool that allows for automatic scaling of the number of threads based on the workload.
+     * A dynamic thread pool that allows for automatic scaling of the number of threads based on the
+     * workload.
      */
     public DynamicThreadPool() {
         this(
@@ -41,7 +43,8 @@ public class DynamicThreadPool implements ThreadPool {
     }
 
     /**
-     * A dynamic thread pool that allows for automatic scaling of the number of threads based on the workload.
+     * A dynamic thread pool that allows for automatic scaling of the number of threads based on the
+     * workload.
      *
      * @param initialCapacity the initial capacity of the thread pool
      */
@@ -49,6 +52,7 @@ public class DynamicThreadPool implements ThreadPool {
         this(
                 initialCapacity,
                 new PoolOptions()
+                        .setMaxCapacity(Integer.MAX_VALUE)
                         .setEnableScaling(true)
                         .setScaleUpAmount(DEFAULT_SCALE)
                         .setScaleDownAmount(DEFAULT_SCALE));
@@ -83,7 +87,7 @@ public class DynamicThreadPool implements ThreadPool {
         if (!pool.hasAvailable()) {
             pool.scaleUp();
         }
-        threadPoolMetrics.setAvailableThreads(threadPoolMetrics.getAvailableThreads() - 1);
+        threadPoolMetrics.setAvailableThreads(pool.getSize() - 1);
         threadPoolMetrics.setActiveThreads(threadPoolMetrics.getActiveThreads() + 1);
         if (pool.getPoolOptions().isWaitFor()) {
             return pool.take();
@@ -100,6 +104,8 @@ public class DynamicThreadPool implements ThreadPool {
                             + " Retiring {}",
                     executionThread);
             executionThread.setRunning(false);
+            pool.remove(executionThread);
+            threadPoolMetrics.setActiveThreads(threadPoolMetrics.getActiveThreads() - 1);
             return;
         }
         LOGGER.trace("Returning {} to pool", executionThread);
@@ -116,8 +122,11 @@ public class DynamicThreadPool implements ThreadPool {
             ExecutionThread executionThread = pool.get();
             executionThread.setRunning(false);
             executionThread.getThread().interrupt();
+            pool.remove(executionThread);
             LOGGER.trace("Shutdown " + executionThread);
         }
+        threadPoolMetrics.setAvailableThreads(0);
+        threadPoolMetrics.setAvailableThreads(0);
         pool.getLoaned()
                 .forEach(
                         t -> {
@@ -136,9 +145,7 @@ public class DynamicThreadPool implements ThreadPool {
         return threadPoolMetrics;
     }
 
-    /**
-     * Starts the auto-scaling task in the DynamicThreadPool.
-     */
+    /** Starts the auto-scaling task in the DynamicThreadPool. */
     private void startAutoScalingTask() {
         ExecutionSettings settings =
                 new ExecutionSettings().setDelayBetween(1000).setRepeatIndefinitely(true);

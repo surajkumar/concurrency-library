@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The VirtualThreadPerTaskExecutionMachine class represents an execution machine that creates a virtual thread for
- * each task execution. It implements the ExecutionMachine interface and provides methods to execute promises,
- * manage thread pool, and handle promise events.
+ * The VirtualThreadPerTaskExecutionMachine class represents an execution machine that creates a
+ * virtual thread for each task execution. It implements the ExecutionMachine interface and provides
+ * methods to execute promises, manage thread pool, and handle promise events.
  */
 public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER =

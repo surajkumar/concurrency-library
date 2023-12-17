@@ -7,7 +7,7 @@ import java.util.Stack;
 /**
  * The ThreadUtils class provides utility methods for working with threads.
  *
- * This class allows retrieving all threads within a given thread group.
+ * <p>This class allows retrieving all threads within a given thread group.
  */
 public class ThreadUtils {
 

@@ -3,9 +3,7 @@ package io.github.surajkumar.concurrency.pools;
 import io.github.surajkumar.concurrency.metrics.ThreadPoolMetrics;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
 
-/**
- * The ThreadPool interface represents a pool of execution threads.
- */
+/** The ThreadPool interface represents a pool of execution threads. */
 public interface ThreadPool {
     /**
      * Borrow method is used to request an available ExecutionThread from the ThreadPool.
@@ -22,10 +20,10 @@ public interface ThreadPool {
     void returnToPool(ExecutionThread executionThread);
 
     /**
-     * The shutdown method is used to gracefully shut down the ThreadPool. It stops the execution of promises
-     * and releases any resources held by the ThreadPool.
+     * The shutdown method is used to gracefully shut down the ThreadPool. It stops the execution of
+     * promises and releases any resources held by the ThreadPool.
      *
-     * If the ThreadPool has already been shutdown, calling this method has no effect.
+     * <p>If the ThreadPool has already been shutdown, calling this method has no effect.
      */
     void shutdown();
 
