@@ -2,6 +2,18 @@
 This repository provides a robust set of tools to seamlessly manage concurrency and parallelism within your projects.
 Whether you need thread pooling, single-threaded execution, or virtual thread support, this library has you covered.
 
+### Maven
+```
+<dependency>
+  <groupId>io.github.surajkumar</groupId>
+  <artifactId>concurrency-library</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+### Gradle
+`implementation "io.github.surajkumar:concurrency-library:1.0.0"`
+
 ## Execution Machines
 Execution Machines are the backbone of this library, handling the execution of tasks efficiently.
 
