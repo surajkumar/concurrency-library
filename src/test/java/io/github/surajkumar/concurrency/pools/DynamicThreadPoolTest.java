@@ -1,10 +1,11 @@
 package io.github.surajkumar.concurrency.pools;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import io.github.surajkumar.concurrency.exceptions.ExecutionMachineShutdownException;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class DynamicThreadPoolTest {
     @Test
@@ -19,7 +20,6 @@ public class DynamicThreadPoolTest {
 
         threadPool.returnToPool(firstThread);
         threadPool.returnToPool(secondThread);
-
 
         assertEquals(2, threadPool.getMetrics().getAvailableThreads());
         assertEquals(0, threadPool.getMetrics().getActiveThreads());
@@ -44,17 +44,21 @@ public class DynamicThreadPoolTest {
 
     @Test
     void testPoolScaling() throws InterruptedException {
-        DynamicThreadPool threadPool = new DynamicThreadPool(2, new PoolOptions()
-                .setMaxCapacity(Integer.MAX_VALUE)
-                .setEnableScaling(true)
-                .setScaleUpAmount(2)
-                .setScaleDownAmount(2));
+        DynamicThreadPool threadPool =
+                new DynamicThreadPool(
+                        2,
+                        new PoolOptions()
+                                .setMaxCapacity(Integer.MAX_VALUE)
+                                .setEnableScaling(true)
+                                .setScaleUpAmount(2)
+                                .setScaleDownAmount(2));
 
         ExecutionThread firstThread = threadPool.borrow();
         ExecutionThread secondThread = threadPool.borrow();
         ExecutionThread thirdThread = threadPool.borrow();
 
-        // Scaling should kick on the third borrow, so it goes up by 2 but then available is 1 because
+        // Scaling should kick on the third borrow, so it goes up by 2 but then available is 1
+        // because
         // we just borrowed
 
         assertEquals(1, threadPool.getMetrics().getAvailableThreads());
@@ -69,8 +73,7 @@ public class DynamicThreadPoolTest {
 
     @Test
     void testConstructorWithInitialCapacityAndPoolOptions() {
-        PoolOptions poolOptions = new PoolOptions()
-            .setEnableScaling(false);
+        PoolOptions poolOptions = new PoolOptions().setEnableScaling(false);
 
         DynamicThreadPool threadPool = new DynamicThreadPool(2, poolOptions);
 

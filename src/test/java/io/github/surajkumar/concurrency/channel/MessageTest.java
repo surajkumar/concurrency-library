@@ -1,9 +1,9 @@
 package io.github.surajkumar.concurrency.channel;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+
+import org.junit.jupiter.api.Test;
 
 public class MessageTest {
 
@@ -15,5 +15,4 @@ public class MessageTest {
         assertEquals(content, message.getContent());
         assertEquals(mock, message.getSender());
     }
-
 }

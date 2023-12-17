@@ -1,20 +1,22 @@
 package io.github.surajkumar.concurrency.machines;
 
-import io.github.surajkumar.concurrency.exceptions.NoExecutionThreadAvailableException;
-import io.github.surajkumar.concurrency.pools.ThreadPool;
-import io.github.surajkumar.concurrency.promise.Promise;
-import io.github.surajkumar.concurrency.threads.ExecutionSettings;
-import io.github.surajkumar.concurrency.threads.ExecutionThread;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import io.github.surajkumar.concurrency.exceptions.NoExecutionThreadAvailableException;
+import io.github.surajkumar.concurrency.pools.ThreadPool;
+import io.github.surajkumar.concurrency.promise.Promise;
+import io.github.surajkumar.concurrency.threads.ExecutionSettings;
+import io.github.surajkumar.concurrency.threads.ExecutionThread;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 /**
- * The PooledExecutionMachineTest class tests the functionalities of the PooledExecutionMachine class.
+ * The PooledExecutionMachineTest class tests the functionalities of the PooledExecutionMachine
+ * class.
  */
 public class PooledExecutionMachineTest {
 
@@ -38,7 +40,8 @@ public class PooledExecutionMachineTest {
     }
 
     @Test
-    public void execute_WhenNoExecutionThreadIsAvailable_ShouldThrowNoExecutionThreadAvailableException() {
+    public void
+            execute_WhenNoExecutionThreadIsAvailable_ShouldThrowNoExecutionThreadAvailableException() {
         ThreadPool mockThreadPool = Mockito.mock(ThreadPool.class);
         Promise<?> mockPromise = Mockito.mock(Promise.class);
         ExecutionSettings executionSettings = new ExecutionSettings();
@@ -73,9 +76,10 @@ public class PooledExecutionMachineTest {
         PooledExecutionMachine pooledMachine = new PooledExecutionMachine(threadPoolMock);
         Promise promiseMock = Mockito.mock(Promise.class);
 
-        assertThrows(NullPointerException.class, () -> {
-            pooledMachine.onPromiseComplete(promiseMock, null);
-        });
+        assertThrows(
+                NullPointerException.class,
+                () -> {
+                    pooledMachine.onPromiseComplete(promiseMock, null);
+                });
     }
-
 }

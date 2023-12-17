@@ -1,10 +1,11 @@
 package io.github.surajkumar.concurrency.machines;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import io.github.surajkumar.concurrency.promise.Promise;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class SingleThreadedExecutionMachineTest {
 
@@ -21,7 +22,6 @@ public class SingleThreadedExecutionMachineTest {
     void testExecuteWithNullSettings() {
         SingleThreadedExecutionMachine executionMachine = new SingleThreadedExecutionMachine();
         Promise<String> promise = new Promise<>(() -> "Hello, World!");
-        assertThrows(NullPointerException.class,
-                     () -> executionMachine.execute(promise, null));
+        assertThrows(NullPointerException.class, () -> executionMachine.execute(promise, null));
     }
 }

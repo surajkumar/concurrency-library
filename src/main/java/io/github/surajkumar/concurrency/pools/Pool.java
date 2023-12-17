@@ -107,8 +107,12 @@ public class Pool {
         }
 
         int scale = poolOptions.getScaleUpAmount();
-        if(scale + currentCapacity > poolOptions.getMaxCapacity() && poolOptions.getMaxCapacity() > 0) {
-            scale = Math.min(poolOptions.getMaxCapacity() - currentCapacity, poolOptions.getScaleUpAmount());
+        if (scale + currentCapacity > poolOptions.getMaxCapacity()
+                && poolOptions.getMaxCapacity() > 0) {
+            scale =
+                    Math.min(
+                            poolOptions.getMaxCapacity() - currentCapacity,
+                            poolOptions.getScaleUpAmount());
         }
 
         for (int i = 0; i < scale; i++) {
