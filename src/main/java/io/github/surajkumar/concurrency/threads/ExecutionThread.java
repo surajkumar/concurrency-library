@@ -13,6 +13,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * The ExecutionThread class represents a thread that executes promises.
+ * It implements the Runnable interface and provides methods to manage the execution and lifecycle of the thread.
+ */
 public class ExecutionThread implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionThread.class);
     private final AtomicBoolean running = new AtomicBoolean(true);
@@ -21,6 +25,12 @@ public class ExecutionThread implements Runnable {
     private final ExecutionThreadMetrics metrics = new ExecutionThreadMetrics();
     private Thread thread;
 
+    /**
+     * This method represents the execution logic of the ExecutionThread.
+     * It runs the thread until it is interrupted or the running flag is set to false.
+     * It retrieves ExecutionPair objects from the queue, executes the associated Promise,
+     * and updates the execution metrics accordingly.
+     */
     @Override
     public void run() {
         LOGGER.trace(this + " running");
@@ -93,6 +103,13 @@ public class ExecutionThread implements Runnable {
         }
     }
 
+    /**
+     * Adds a {@link ExecutionThreadWatcher} to the list of registered watchers.
+     * If the execution thread is not running, it throws an {@link ExecutionThreadRetiredException}.
+     *
+     * @param watcher the {@link ExecutionThreadWatcher} to add
+     * @throws ExecutionThreadRetiredException if the execution thread is not running
+     */
     public void addWatcher(ExecutionThreadWatcher watcher) {
         if (!isRunning()) {
             throw new ExecutionThreadRetiredException();
@@ -103,6 +120,11 @@ public class ExecutionThread implements Runnable {
         }
     }
 
+    /**
+     * Removes a {@link ExecutionThreadWatcher} from the list of registered watchers.
+     *
+     * @param watcher the {@link ExecutionThreadWatcher} to remove
+     */
     public void removeWatcher(ExecutionThreadWatcher watcher) {
         synchronized (watchers) {
             boolean removed = watchers.remove(watcher);
@@ -112,6 +134,14 @@ public class ExecutionThread implements Runnable {
         }
     }
 
+    /**
+     * Adds a promise to the execution queue with the specified execution settings.
+     * If the execution thread is not running, it throws an ExecutionThreadRetiredException.
+     *
+     * @param promise           the promise to add to the queue
+     * @param executionSettings the execution settings for the promise
+     * @throws ExecutionThreadRetiredException if the execution thread is not running
+     */
     public void queuePromise(Promise<?> promise, ExecutionSettings executionSettings) {
         if (!isRunning()) {
             throw new ExecutionThreadRetiredException();
@@ -135,10 +165,21 @@ public class ExecutionThread implements Runnable {
         return metrics;
     }
 
+    /**
+     * Creates and starts an ExecutionThread with the default name "ExecutionThread".
+     *
+     * @return the created ExecutionThread
+     */
     public static ExecutionThread createStarted() {
         return createStarted("ExecutionThread");
     }
 
+    /**
+     * This method creates and starts an ExecutionThread with the given name.
+     *
+     * @param name the name of the ExecutionThread
+     * @return the created ExecutionThread
+     */
     public static ExecutionThread createStarted(String name) {
         ExecutionThread executionThread = new ExecutionThread();
         executionThread.setRunning(true);

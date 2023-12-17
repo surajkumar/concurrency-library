@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * The ExecutionVirtualThread class represents a virtual thread that executes promises.
+ * It extends the ExecutionThread class and provides methods to manage the execution and lifecycle of the virtual thread.
+ */
 public class ExecutionVirtualThread extends ExecutionThread {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionVirtualThread.class);
     private final List<ExecutionThreadWatcher> watchers = new CopyOnWriteArrayList<>();
@@ -77,6 +81,11 @@ public class ExecutionVirtualThread extends ExecutionThread {
         }
     }
 
+    /**
+     * Adds a {@link ExecutionThreadWatcher} to the list of registered watchers.
+     *
+     * @param watcher the {@link ExecutionThreadWatcher} to add
+     */
     @Override
     public void addWatcher(ExecutionThreadWatcher watcher) {
         synchronized (watchers) {
@@ -85,6 +94,11 @@ public class ExecutionVirtualThread extends ExecutionThread {
         }
     }
 
+    /**
+     * Removes the specified {@link ExecutionThreadWatcher} from the list of registered watchers.
+     *
+     * @param watcher the {@link ExecutionThreadWatcher} to remove
+     */
     @Override
     public void removeWatcher(ExecutionThreadWatcher watcher) {
         synchronized (watchers) {

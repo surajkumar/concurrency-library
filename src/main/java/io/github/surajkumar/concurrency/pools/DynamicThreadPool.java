@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * DynamicThreadPool represents a dynamic thread pool that can be used to manage and borrow ExecutionThreads.
+ * The pool dynamically scales up or down based on the demand and the specified pool options.
+ */
 public class DynamicThreadPool implements ThreadPool {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamicThreadPool.class);
     private static final int DEFAULT_INITIAL_CAPACITY = 2;
@@ -23,6 +27,9 @@ public class DynamicThreadPool implements ThreadPool {
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final Executor autoScalingExecutor = new Executor(new SingleThreadedExecutionMachine());
 
+    /**
+     * A dynamic thread pool that allows for automatic scaling of the number of threads based on the workload.
+     */
     public DynamicThreadPool() {
         this(
                 DEFAULT_INITIAL_CAPACITY,
@@ -33,6 +40,11 @@ public class DynamicThreadPool implements ThreadPool {
                         .setWaitFor(true));
     }
 
+    /**
+     * A dynamic thread pool that allows for automatic scaling of the number of threads based on the workload.
+     *
+     * @param initialCapacity the initial capacity of the thread pool
+     */
     public DynamicThreadPool(int initialCapacity) {
         this(
                 initialCapacity,
@@ -42,6 +54,12 @@ public class DynamicThreadPool implements ThreadPool {
                         .setScaleDownAmount(DEFAULT_SCALE));
     }
 
+    /**
+     * Constructs a new DynamicThreadPool with the specified initial capacity and pool options.
+     *
+     * @param initialCapacity the initial capacity of the thread pool
+     * @param poolOptions the pool options for the thread pool
+     */
     public DynamicThreadPool(int initialCapacity, PoolOptions poolOptions) {
         this.pool = new Pool(initialCapacity, poolOptions);
 
@@ -118,6 +136,9 @@ public class DynamicThreadPool implements ThreadPool {
         return threadPoolMetrics;
     }
 
+    /**
+     * Starts the auto-scaling task in the DynamicThreadPool.
+     */
     private void startAutoScalingTask() {
         ExecutionSettings settings =
                 new ExecutionSettings().setDelayBetween(1000).setRepeatIndefinitely(true);

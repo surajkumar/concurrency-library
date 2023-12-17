@@ -9,6 +9,9 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * Pool represents a thread pool that manages ExecutionThreads for executing promises.
+ */
 public class Pool {
     private static final Logger LOGGER = LoggerFactory.getLogger(Pool.class);
     private final BlockingQueue<ExecutionThread> queue = new LinkedBlockingQueue<>();
@@ -17,16 +20,31 @@ public class Pool {
     private int currentCapacity;
     private final PoolOptions poolOptions;
 
+    /**
+     * Represents a pool of execution threads with specified initial capacity and pool options.
+     */
     public Pool(int initialCapacity, PoolOptions poolOptions) {
         this.initialCapacity = initialCapacity;
         this.currentCapacity = initialCapacity;
         this.poolOptions = poolOptions;
     }
 
+    /**
+     * Checks if there are available items in the queue.
+     *
+     * @return true if there are available items in the queue, false otherwise.
+     */
     public boolean hasAvailable() {
         return queue.peek() != null;
     }
 
+    /**
+     * Retrieves an ExecutionThread from the queue.
+     * If no thread is currently available in the queue, the method waits until a thread becomes available.
+     *
+     * @return the retrieved ExecutionThread
+     *         or null if the method is interrupted while waiting for a thread
+     */
     public ExecutionThread take() {
         try {
             ExecutionThread executionThread = queue.take();
@@ -39,6 +57,12 @@ public class Pool {
         }
     }
 
+    /**
+     * Retrieves an ExecutionThread from the queue.
+     * If no thread is currently available in the queue, the method waits until a thread becomes available.
+     *
+     * @return the retrieved ExecutionThread or null if the method is interrupted while waiting for a thread
+     */
     public ExecutionThread get() {
         ExecutionThread executionThread = queue.poll();
         if (executionThread != null) {
@@ -47,6 +71,11 @@ public class Pool {
         return executionThread;
     }
 
+    /**
+     * Adds an ExecutionThread to the pool.
+     *
+     * @param executionThread the ExecutionThread to be added
+     */
     public void add(ExecutionThread executionThread) {
         if (executionThread != null) {
             queue.add(executionThread);
@@ -54,6 +83,11 @@ public class Pool {
         }
     }
 
+    /**
+     * Removes the specified ExecutionThread from the pool.
+     *
+     * @param executionThread the ExecutionThread to be removed
+     */
     public void remove(ExecutionThread executionThread) {
         if (executionThread != null) {
             queue.remove(executionThread);
@@ -61,6 +95,11 @@ public class Pool {
         }
     }
 
+    /**
+     * Increases the capacity of the pool by creating and adding new ExecutionThread instances.
+     * However, if scaling is disabled in the pool options or the pool is already at maximum capacity,
+     * the method does nothing.
+     */
     public void scaleUp() {
         if (!poolOptions.isEnableScaling()) {
             return;
@@ -83,6 +122,10 @@ public class Pool {
         currentCapacity += scale;
     }
 
+    /**
+     * Scales down the pool by removing ExecutionThreads from the queue.
+     * If scaling is disabled or the scale down amount is greater than the current capacity, the method does nothing.
+     */
     public void scaleDown() {
         if (!poolOptions.isEnableScaling()) {
             return;
@@ -98,6 +141,11 @@ public class Pool {
         currentCapacity = Math.max(0, currentCapacity - scale);
     }
 
+    /**
+     * Retrieves the loaned ExecutionThreads from the pool.
+     *
+     * @return a Queue of ExecutionThreads that are currently loaned out from the pool
+     */
     public Queue<ExecutionThread> getLoaned() {
         return loaned;
     }
@@ -106,18 +154,38 @@ public class Pool {
         return queue.isEmpty();
     }
 
+    /**
+     * Retrieves the PoolOptions object associated with the Pool.
+     *
+     * @return the PoolOptions object
+     */
     public PoolOptions getPoolOptions() {
         return poolOptions;
     }
 
+    /**
+     * Retrieves the size of the queue.
+     *
+     * @return the size of the queue
+     */
     public int getSize() {
         return queue.size();
     }
 
+    /**
+     * Retrieves the initial capacity of the pool.
+     *
+     * @return the initial capacity of the pool
+     */
     public int getInitialCapacity() {
         return initialCapacity;
     }
 
+    /**
+     * Retrieves the current capacity of the pool.
+     *
+     * @return the current capacity of the pool
+     */
     public int getCurrentCapacity() {
         return currentCapacity;
     }

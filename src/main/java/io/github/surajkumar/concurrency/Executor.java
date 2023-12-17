@@ -12,6 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * The Executor class is responsible for executing promises asynchronously using an ExecutionMachine.
+ * It provides various methods for running promises and managing their execution.
+ */
 public class Executor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Executor.class);
     private final AtomicBoolean running = new AtomicBoolean(true);
@@ -25,6 +29,11 @@ public class Executor {
         this(new SingleThreadedExecutionMachine());
     }
 
+    /**
+     * Executes the given promises in parallel and waits for all of them to complete.
+     *
+     * @param promises the promises to join
+     */
     public void join(Promise<?>... promises) {
         run(promises);
         for (Promise<?> p : promises) {
@@ -32,10 +41,22 @@ public class Executor {
         }
     }
 
+    /**
+     * Executes the given promises in parallel.
+     *
+     * @param promises the promises to execute
+     */
     public void run(Promise<?>... promises) {
         run(new ExecutionSettings(), promises);
     }
 
+    /**
+     * Executes the given promises using the provided execution settings.
+     *
+     * @param executionSettings the execution settings to apply
+     * @param promises the promises to execute
+     * @throws ExecutionMachineShutdownException if the execution machine is shutdown
+     */
     public void run(ExecutionSettings executionSettings, Promise<?>... promises) {
         if (!running.get()) {
             throw new ExecutionMachineShutdownException();

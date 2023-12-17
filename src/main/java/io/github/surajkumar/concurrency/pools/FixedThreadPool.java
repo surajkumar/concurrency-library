@@ -9,6 +9,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * The FixedThreadPool class is an implementation of the ThreadPool interface.
+ * It represents a fixed-sized thread pool that allows borrowing and returning of ExecutionThreads.
+ * The class uses a Pool object to manage the threads and tracks metrics using the ThreadPoolMetrics class.
+ */
 public class FixedThreadPool implements ThreadPool {
     private static final Logger LOGGER = LoggerFactory.getLogger(FixedThreadPool.class);
     private final ThreadPoolMetrics threadPoolMetrics = new ThreadPoolMetrics();
