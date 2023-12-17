@@ -17,10 +17,26 @@ public class Promise<T> {
     private boolean finished;
     private T result;
 
+    /**
+     * The Promise class represents a promise of a task execution. It allows you to define a task to
+     * be executed, handle the result or exception of the task, and retrieve metrics about the
+     * execution.
+     *
+     * @param task the task being executed
+     */
     public Promise(Task<T> task) {
         this(task, null, null);
     }
 
+    /**
+     * The Promise class represents a promise of a task execution. It allows you to define a task to
+     * be executed, handle the result or exception to the task, and retrieve metrics about the
+     * execution.
+     *
+     * @param task the task to be executed
+     * @param resultHandler the handler that will receive the result
+     * @param exceptionHandler the handler that will handle any exceptions during execution
+     */
     public Promise(
             Task<T> task,
             PromiseHandler<T> resultHandler,
@@ -38,7 +54,6 @@ public class Promise<T> {
      *
      * @param result the handler for the result of the Promise
      * @return the current Promise instance
-     * @param <T> the type of result handled by the Promise
      */
     public Promise<T> onResolve(PromiseHandler<T> result) {
         this.resultHandler = result;

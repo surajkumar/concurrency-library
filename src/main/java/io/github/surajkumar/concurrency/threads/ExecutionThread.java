@@ -26,6 +26,14 @@ public class ExecutionThread implements Runnable {
     private Thread thread;
 
     /**
+     * The ExecutionThread class represents a thread that is responsible for executing promises. It
+     * runs until it is either interrupted or the running flag is set to false. It retrieves
+     * ExecutionPair objects from the queue, executes the associated Promise, and updates the
+     * execution metrics accordingly.
+     */
+    public ExecutionThread() {}
+
+    /**
      * This method represents the execution logic of the ExecutionThread. It runs the thread until
      * it is interrupted or the running flag is set to false. It retrieves ExecutionPair objects
      * from the queue, executes the associated Promise, and updates the execution metrics
@@ -149,18 +157,38 @@ public class ExecutionThread implements Runnable {
         queue.add(new ExecutionPair(promise, executionSettings));
     }
 
+    /**
+     * Retrieves the thread associated with this ExecutionThread.
+     *
+     * @return the thread associated with this ExecutionThread
+     */
     public Thread getThread() {
         return thread;
     }
 
+    /**
+     * Returns the current running state of the execution thread.
+     *
+     * @return true if the execution thread is running, false otherwise.
+     */
     public boolean isRunning() {
         return running.get();
     }
 
+    /**
+     * Sets the running state of the ExecutionThread.
+     *
+     * @param running the running state to set
+     */
     public void setRunning(boolean running) {
         this.running.set(running);
     }
 
+    /**
+     * Retrieves the metrics of the execution thread.
+     *
+     * @return The execution metrics as an ExecutionThreadMetrics object.
+     */
     public ExecutionThreadMetrics getMetrics() {
         return metrics;
     }

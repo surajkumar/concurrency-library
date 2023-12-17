@@ -21,6 +21,10 @@ public class SingleThreadedExecutionMachine implements ExecutionMachine {
             LoggerFactory.getLogger(SingleThreadedExecutionMachine.class);
     private final ThreadPool threadPool;
 
+    /**
+     * The SingleThreadedExecutionMachine class represents an execution machine that executes
+     * promises using a single thread. It implements the ExecutionMachine interface.
+     */
     public SingleThreadedExecutionMachine() {
         PoolOptions options =
                 new PoolOptions().setWaitFor(true).setEnableScaling(false).setMaxCapacity(1);

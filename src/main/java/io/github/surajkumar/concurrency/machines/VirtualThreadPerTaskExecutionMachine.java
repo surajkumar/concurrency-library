@@ -20,6 +20,13 @@ public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(VirtualThreadPerTaskExecutionMachine.class);
 
+    /**
+     * The VirtualThreadPerTaskExecutionMachine class represents an execution machine that creates a
+     * virtual thread for each task execution. It implements the ExecutionMachine interface and
+     * provides methods to execute promises, manage thread pool, and handle promise events.
+     */
+    public VirtualThreadPerTaskExecutionMachine() {}
+
     @Override
     public void execute(Promise<?> promise, ExecutionSettings executionSettings) {
         ExecutionVirtualThread executionThread =

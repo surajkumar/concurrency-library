@@ -20,10 +20,25 @@ public class ExecutionVirtualThread extends ExecutionThread {
     private final ExecutionThreadMetrics metrics = new ExecutionThreadMetrics();
     private final ExecutionPair executionPair;
 
+    /**
+     * The ExecutionVirtualThread class represents a virtual thread that executes an ExecutionPair.
+     * It provides methods for adding and removing ExecutionThreadWatcher, as well as notifying
+     * watchers about the progress and completion of execution.
+     *
+     * @param executionPair The execution pair containing the promise and execution settings.
+     */
     public ExecutionVirtualThread(ExecutionPair executionPair) {
         this.executionPair = executionPair;
     }
 
+    /**
+     * Executes the virtual thread. This method completes the promise associated with the execution
+     * pair. If there are execution settings defined, it handles the settings like initial start
+     * delay, delay between iterations, and repetition count. If there are no execution settings
+     * defined, it completes the promise once. It notifies the watchers about the progress and
+     * completion of execution. It also increments the metrics for total promises, completed
+     * promises, and failed promises.
+     */
     @Override
     public void run() {
         LOGGER.trace(this + " running");

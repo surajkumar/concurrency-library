@@ -12,6 +12,11 @@ public class ExecutionSettings {
     private int repeat;
     private boolean repeatIndefinitely;
 
+    /**
+     * Creates an instance of ExecutionSettings with default values. The initial start delay, delay
+     * between executions, repeat count, and repeat indefinitely flags are set to their default
+     * values.
+     */
     public ExecutionSettings() {
         initialStartDelay = 0;
         delayBetween = 0;

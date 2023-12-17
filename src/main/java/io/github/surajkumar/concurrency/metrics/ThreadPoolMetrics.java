@@ -15,6 +15,12 @@ public class ThreadPoolMetrics {
     private final AtomicInteger availableThreads = new AtomicInteger();
 
     /**
+     * A set of metrics for a thread pool. Tracks the initial capacity, active threads, and
+     * available threads.
+     */
+    public ThreadPoolMetrics() {}
+
+    /**
      * Clears all metrics in the ThreadPoolMetrics object.
      *
      * <p>This method sets the initial capacity, active threads, and available threads metrics to 0.
@@ -34,6 +40,11 @@ public class ThreadPoolMetrics {
         return initialCapacity.get();
     }
 
+    /**
+     * Sets the initial capacity of the thread pool.
+     *
+     * @param initialCapacity the new initial capacity to set
+     */
     public void setInitialCapacity(int initialCapacity) {
         this.initialCapacity.set(initialCapacity);
     }

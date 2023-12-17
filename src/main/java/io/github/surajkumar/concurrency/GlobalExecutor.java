@@ -16,6 +16,12 @@ public class GlobalExecutor {
     private static Executor pooled;
 
     /**
+     * The GlobalExecutor class provides access to different types of Executors for executing
+     * promises.
+     */
+    public GlobalExecutor() {}
+
+    /**
      * Retrieves an Executor that executes promises in a single thread.
      *
      * @return Returns the single thread Executor.

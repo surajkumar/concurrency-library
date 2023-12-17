@@ -20,6 +20,11 @@ public class FixedThreadPool implements ThreadPool {
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final Pool pool;
 
+    /**
+     * Constructs a FixedThreadPool with the given Pool object.
+     *
+     * @param pool the Pool object to be used by the FixedThreadPool
+     */
     public FixedThreadPool(Pool pool) {
         this.pool = pool;
         for (int i = 0; i < pool.getInitialCapacity(); i++) {

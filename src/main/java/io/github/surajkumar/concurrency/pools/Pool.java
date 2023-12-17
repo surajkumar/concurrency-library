@@ -18,7 +18,12 @@ public class Pool {
     private int currentCapacity;
     private final PoolOptions poolOptions;
 
-    /** Represents a pool of execution threads with specified initial capacity and pool options. */
+    /**
+     * The Pool class represents a pool of execution threads.
+     *
+     * @param initialCapacity The initial size of the pool
+     * @param poolOptions The options to configure this pool
+     */
     public Pool(int initialCapacity, PoolOptions poolOptions) {
         this.initialCapacity = initialCapacity;
         this.currentCapacity = initialCapacity;
@@ -150,6 +155,11 @@ public class Pool {
         return loaned;
     }
 
+    /**
+     * Checks if there are available items in the queue.
+     *
+     * @return true if there are available items in the queue, false otherwise.
+     */
     public boolean isEmpty() {
         return queue.isEmpty();
     }
@@ -190,6 +200,11 @@ public class Pool {
         return currentCapacity;
     }
 
+    /**
+     * Sets the current capacity of the pool.
+     *
+     * @param currentCapacity the new current capacity for the pool
+     */
     public void setCurrentCapacity(int currentCapacity) {
         this.currentCapacity = currentCapacity;
     }

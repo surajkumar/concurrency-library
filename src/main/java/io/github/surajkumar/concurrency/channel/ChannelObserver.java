@@ -14,7 +14,6 @@ public interface ChannelObserver<T> {
      *
      * @param channel The channel that received the message.
      * @param message The received message.
-     * @param <T> The type of the message content.
      */
     void onMessageReceived(Channel<T> channel, Message<T> message);
 }

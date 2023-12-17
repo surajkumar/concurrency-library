@@ -8,6 +8,15 @@ public class PoolOptions {
     private int scaleDownAmount;
     private boolean waitFor;
 
+    /** Class representing the options for a thread pool. */
+    public PoolOptions() {}
+
+    /**
+     * Retrieves the value of the enableScaling option in the PoolOptions. This option determines
+     * whether scaling is enabled or disabled for the pool of execution threads.
+     *
+     * @return true if scaling is enabled, false otherwise
+     */
     public boolean isEnableScaling() {
         return enableScaling;
     }

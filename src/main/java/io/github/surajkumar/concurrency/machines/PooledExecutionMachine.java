@@ -17,6 +17,12 @@ public class PooledExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER = LoggerFactory.getLogger(PooledExecutionMachine.class);
     private final ThreadPool threadPool;
 
+    /**
+     * The PooledExecutionMachine class implements the ExecutionMachine interface. It uses a
+     * ThreadPool to execute Promise instances.
+     *
+     * @param threadPool The ThreadPool to use for this machine
+     */
     public PooledExecutionMachine(ThreadPool threadPool) {
         this.threadPool = threadPool;
     }

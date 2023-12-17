@@ -11,6 +11,8 @@ import java.util.Stack;
  */
 public class ThreadUtils {
 
+    private ThreadUtils() {}
+
     /**
      * Retrieves all threads within a given thread group.
      *

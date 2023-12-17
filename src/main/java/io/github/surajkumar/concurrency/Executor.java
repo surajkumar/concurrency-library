@@ -21,10 +21,19 @@ public class Executor {
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final ExecutionMachine executionMachine;
 
+    /**
+     * Creates an Executor with the provided ExecutionMachine.
+     *
+     * @param executionMachine the ExecutionMachine used to execute promises ExecutionMachine
+     *     interface represents a machine that executes promises using different strategies. It
+     *     provides methods to execute promises, get the thread pool, and implements the
+     *     ExecutionThreadWatcher interface for monitoring promise execution.
+     */
     public Executor(ExecutionMachine executionMachine) {
         this.executionMachine = executionMachine;
     }
 
+    /** Executes the given promises in parallel. */
     public Executor() {
         this(new SingleThreadedExecutionMachine());
     }
@@ -71,6 +80,10 @@ public class Executor {
         }
     }
 
+    /**
+     * Shuts down the Executor's thread pool, if it exists. If the shutdown method on the thread
+     * pool has already been called, calling this method has no effect.
+     */
     public void shutdown() {
         ThreadPool threadPool = executionMachine.getThreadPool();
         if (threadPool != null) {

@@ -17,6 +17,12 @@ public class ThreadPerTaskExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ThreadPerTaskExecutionMachine.class);
 
+    /**
+     * The {@code ThreadPerTaskExecutionMachine} class is an implementation of the {@link
+     * ExecutionMachine} interface that executes each task in a separate thread.
+     */
+    public ThreadPerTaskExecutionMachine() {}
+
     @Override
     public void execute(Promise<?> promise, ExecutionSettings executionSettings) {
         ExecutionThread executionThread = ExecutionThread.createStarted();

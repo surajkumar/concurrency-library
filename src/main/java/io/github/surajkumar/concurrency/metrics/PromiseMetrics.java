@@ -15,6 +15,11 @@ public class PromiseMetrics {
     private String errorDetails;
     private StackTraceElement[] stackTrace;
 
+    /**
+     * The PromiseMetrics class represents the metrics of a Promise execution. It provides methods
+     * to retrieve various metrics such as start time, end time, success status, execution time,
+     * memory usage, error details, and stack trace.
+     */
     public PromiseMetrics() {}
 
     /**
@@ -39,6 +44,11 @@ public class PromiseMetrics {
         return start;
     }
 
+    /**
+     * Sets the start time of the Promise execution.
+     *
+     * @param start The start time of the Promise execution in nanoseconds
+     */
     public void setStart(long start) {
         this.start = start;
     }
@@ -52,6 +62,11 @@ public class PromiseMetrics {
         return end;
     }
 
+    /**
+     * Sets the end time of the Promise execution.
+     *
+     * @param end The end time of the Promise execution in nanoseconds
+     */
     public void setEnd(long end) {
         this.end = end;
     }
@@ -65,6 +80,11 @@ public class PromiseMetrics {
         return success;
     }
 
+    /**
+     * Sets the success status of the Promise execution.
+     *
+     * @param success true if the Promise execution is successful, false otherwise
+     */
     public void setSuccess(boolean success) {
         this.success = success;
     }
@@ -114,6 +134,12 @@ public class PromiseMetrics {
         return errorDetails;
     }
 
+    /**
+     * Sets the error details of the Promise execution. This method assigns the provided error
+     * details to the instance variable {@code errorDetails}.
+     *
+     * @param errorDetails the error details of the Promise execution
+     */
     public void setErrorDetails(String errorDetails) {
         this.errorDetails = errorDetails;
     }
@@ -131,6 +157,12 @@ public class PromiseMetrics {
         return stackTrace;
     }
 
+    /**
+     * Sets the stack trace of the Promise execution.
+     *
+     * @param throwable The Throwable object representing the exception or error that occurred
+     *     during the Promise execution.
+     */
     public void setStackTrace(Throwable throwable) {
         this.stackTrace = throwable.getStackTrace();
     }
