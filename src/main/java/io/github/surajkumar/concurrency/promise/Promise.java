@@ -14,7 +14,7 @@ public class Promise<T> {
     private PromiseHandler<T> resultHandler;
     private PromiseHandler<Exception> exceptionHandler;
     private final PromiseMetrics metrics;
-    private boolean finished;
+    private Status status;
     private T result;
 
     /**
@@ -45,7 +45,7 @@ public class Promise<T> {
         this.resultHandler = resultHandler;
         this.exceptionHandler = exceptionHandler;
         this.metrics = new PromiseMetrics();
-        this.finished = false;
+        this.status = Status.NOT_STARTED;
     }
 
     /**
@@ -91,18 +91,16 @@ public class Promise<T> {
      * encountered during the execution.
      *
      * <p>This method should ideally not be called manually as it will execute the promise on the
-     * current thread. Instead you should use an Executor.
+     * current thread. Instead, you should use an Executor.
      */
     public void complete() {
+        status = Status.RUNNING;
         metrics.clear();
         try {
             long startMemory =
                     Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             result = task.run();
-            finished = true;
-            synchronized (this) {
-                notify();
-            }
+            status = Status.FINISHED;
             long endMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
             metrics.setStart(System.nanoTime());
             metrics.setEnd(System.nanoTime());
@@ -112,11 +110,16 @@ public class Promise<T> {
                 resultHandler.handle(result);
             }
         } catch (Exception ex) {
+            status = Status.ERROR;
             metrics.setSuccess(false);
             metrics.setStackTrace(ex);
             metrics.setErrorDetails(ex.getMessage());
             if (exceptionHandler != null) {
                 exceptionHandler.handle(ex);
+            }
+        } finally {
+            synchronized (this) {
+                notify();
             }
         }
     }
@@ -130,7 +133,7 @@ public class Promise<T> {
      * @return The result of the Promise execution.
      */
     public T get() {
-        if (result != null) {
+        if (status == Status.FINISHED || status == Status.ERROR) {
             return result;
         }
         synchronized (this) {
@@ -148,6 +151,24 @@ public class Promise<T> {
      * @return true if the Promise execution is finished, false otherwise
      */
     public boolean isFinished() {
-        return finished;
+        return status == Status.FINISHED;
+    }
+
+    /**
+     * Checks if the Promise execution finished with an exception.
+     *
+     * @return true if the Promise execution finished exceptionally, false otherwise
+     */
+    public boolean isFinishedExceptionally() {
+        return status == Status.ERROR;
+    }
+
+    /**
+     * Retrieves the status of the Promise execution.
+     *
+     * @return The status of the Promise.
+     */
+    public Status getStatus() {
+        return status;
     }
 }
