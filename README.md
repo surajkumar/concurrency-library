@@ -7,7 +7,7 @@ Whether you need thread pooling, single-threaded execution, or virtual thread su
 <dependency>
   <groupId>io.github.surajkumar</groupId>
   <artifactId>concurrency-library</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
