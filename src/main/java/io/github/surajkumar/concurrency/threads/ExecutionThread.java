@@ -219,6 +219,10 @@ public class ExecutionThread implements Runnable {
 
     @Override
     public String toString() {
-        return thread.getName();
+        if(thread != null) {
+            return thread.getName();
+        } else {
+            return "ExecutionThread";
+        }
     }
 }
