@@ -29,7 +29,7 @@ public class ThreadPerTaskExecutionMachineTest {
                 new Promise<>(
                         () -> {
                             try {
-                                Thread.sleep(2000);
+                                Thread.sleep(100);
                             } catch (InterruptedException e) {
                                 fail(e.getMessage());
                             }
@@ -77,7 +77,7 @@ public class ThreadPerTaskExecutionMachineTest {
                 new Promise<>(
                         () -> {
                             try {
-                                Thread.sleep(2000);
+                                Thread.sleep(100);
                             } catch (InterruptedException e) {
                                 fail(e.getMessage());
                             }
@@ -109,7 +109,7 @@ public class ThreadPerTaskExecutionMachineTest {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        // assertEquals(numOfThreads, count);
+        assertEquals(numOfThreads, count);
         assertTrue(promise.isFinished(), "Promise did not finish successfully");
     }
 }
