@@ -13,6 +13,6 @@ public class MessageTest {
         ChannelObserver<String> mock = mock(ChannelObserver.class);
         Message<String> message = Message.createMessage(content, mock);
         assertEquals(content, message.getContent());
-        assertEquals(mock, message.getSender());
+        assertEquals(mock, message.getSender()); //world
     }
 }
