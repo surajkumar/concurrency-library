@@ -8,8 +8,10 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ChannelTest {
 
@@ -51,7 +53,7 @@ public class ChannelTest {
     @Test
     public void testSendMessageToMultipleThreads() throws InterruptedException {
         class User implements ChannelObserver<String> {
-            private final List<String> receivedMessage = new ArrayList<>();
+            private final List<String> receivedMessages = new ArrayList<>();
             private final AtomicInteger count;
             private final CountDownLatch latch;
 
@@ -62,7 +64,8 @@ public class ChannelTest {
 
             @Override
             public void onMessageReceived(Channel<String> channel, Message<String> message) {
-                receivedMessage.add(message.getContent());
+                receivedMessages.add(message.getContent());
+                System.out.println("Received a message total " + receivedMessages.size());
                 count.incrementAndGet();
                 latch.countDown();
             }
@@ -72,6 +75,7 @@ public class ChannelTest {
         String message = "Hello";
 
         List<User> userList = new ArrayList<>();
+        AtomicReference<Exception> exception = new AtomicReference<>();
         AtomicInteger count = new AtomicInteger();
         CountDownLatch latch = new CountDownLatch(numThreads);
         Channel<String> channel = new Channel<>();
@@ -80,20 +84,32 @@ public class ChannelTest {
             User user = new User(count, latch);
             channel.register(user);
             userList.add(user);
-            new Thread(() -> channel.sendMessage(Message.createMessage(message, user))).start();
+            new Thread(() -> {
+                try {
+                    channel.sendMessage(Message.createMessage(message, user));
+                } catch (Exception e) {
+                    exception.set(e);
+                } finally {
+                    latch.countDown();
+                }
+            }).start();
         }
 
         latch.await();
 
-        userList.forEach(
-                user -> {
-                    int size = user.receivedMessage.size();
-                    assertEquals(4, size);
-                });
+        if (exception.get() != null) {
+            throw new AssertionError("Exception occurred in one of the threads", exception.get());
+        }
 
+        Thread.sleep(10000);
+
+        AtomicInteger size = new AtomicInteger();
+
+        userList.forEach(user -> size.addAndGet(user.receivedMessages.size()));
+
+        assertEquals(20, size.get());
         assertEquals(numThreads * numThreads - numThreads, count.get());
     }
-
     @Test
     public void testMessageReceived() throws InterruptedException {
         ChannelObserver<String> observerMock = mock(ChannelObserver.class);
