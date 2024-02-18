@@ -3,6 +3,8 @@ package io.github.surajkumar.concurrency.channel;
 import io.github.surajkumar.concurrency.metrics.ChannelMetrics;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
  * @param <T> The type of the message content.
  */
 public class Channel<T> {
-    private final List<ChannelObserver<T>> observers = new ArrayList<>();
+    private final List<ChannelObserver<T>> observers = Collections.synchronizedList(new ArrayList<>());
     private final ChannelMetrics metrics = new ChannelMetrics();
 
     /** The Channel class represents a channel that can send and receive messages. */
@@ -24,7 +26,7 @@ public class Channel<T> {
      */
     public void sendMessage(Message<T> message) {
         metrics.incrementSentMessages();
-        synchronized (observers) {
+        synchronized (this) {
             observers.forEach(
                     observer -> {
                         if (message.getSender() != observer) {
@@ -41,7 +43,7 @@ public class Channel<T> {
      * @param recipient The recipient observer to receive the message.
      */
     public void sendMessage(Message<T> message, ChannelObserver<T> recipient) {
-        synchronized (observers) {
+        synchronized (this) {
             for (ChannelObserver<T> observer : observers) {
                 if (observer == recipient) {
                     observer.onMessageReceived(this, message);
@@ -57,7 +59,7 @@ public class Channel<T> {
      * @param channelObserver The observer to be registered.
      */
     public void register(ChannelObserver<T> channelObserver) {
-        synchronized (observers) {
+        synchronized (this) {
             observers.add(channelObserver);
             metrics.incrementObserverCount();
         }
@@ -69,7 +71,7 @@ public class Channel<T> {
      * @param channelObserver The observer to be deregistered.
      */
     public void deregister(ChannelObserver<T> channelObserver) {
-        synchronized (observers) {
+        synchronized (this) {
             observers.remove(channelObserver);
             metrics.decrementObserverCount();
         }
