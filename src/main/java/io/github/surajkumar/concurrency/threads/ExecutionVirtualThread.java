@@ -42,8 +42,8 @@ public class ExecutionVirtualThread extends ExecutionThread {
     @Override
     public void run() {
         LOGGER.trace(this + " running");
-        Promise<?> promise = executionPair.getPromise();
-        ExecutionSettings executionSettings = executionPair.getExecutionSettings();
+        Promise<?> promise = executionPair.promise();
+        ExecutionSettings executionSettings = executionPair.executionSettings();
         metrics.incrementTotalPromises();
         LOGGER.trace("Running promise {}", promise);
         notifyWatcherOfRunning(promise);

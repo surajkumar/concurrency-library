@@ -77,9 +77,7 @@ public class FixedThreadPool implements ThreadPool {
         }
         pool.getLoaned()
                 .forEach(
-                        t -> {
-                            t.setRunning(false);
-                        });
+                        t -> t.setRunning(false));
         pool.getLoaned().clear();
     }
 

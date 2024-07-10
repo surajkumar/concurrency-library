@@ -19,7 +19,7 @@ public class Promise<T> {
 
     /**
      * The Promise class represents a promise of a task execution. It allows you to define a task to
-     * be executed, handle the result or exception of the task, and retrieve metrics about the
+     * be executed, handle the result or exception to the task, and retrieve metrics about the
      * execution.
      *
      * @param task the task being executed

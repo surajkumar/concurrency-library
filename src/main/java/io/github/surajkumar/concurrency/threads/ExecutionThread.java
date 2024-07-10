@@ -41,7 +41,7 @@ public class ExecutionThread implements Runnable {
      */
     @Override
     public void run() {
-        LOGGER.trace(this + " running");
+        LOGGER.trace("{} running", this);
         while (running.get() && !thread.isInterrupted()) {
             ExecutionPair executionPair;
             try {
@@ -51,8 +51,8 @@ public class ExecutionThread implements Runnable {
                 running.set(false);
                 return;
             }
-            Promise<?> promise = executionPair.getPromise();
-            ExecutionSettings executionSettings = executionPair.getExecutionSettings();
+            Promise<?> promise = executionPair.promise();
+            ExecutionSettings executionSettings = executionPair.executionSettings();
             metrics.incrementTotalPromises();
             LOGGER.trace("Running promise {}", promise);
             notifyWatcherOfRunning(promise);

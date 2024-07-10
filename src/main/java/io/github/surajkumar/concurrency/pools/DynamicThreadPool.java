@@ -123,15 +123,13 @@ public class DynamicThreadPool implements ThreadPool {
             executionThread.setRunning(false);
             executionThread.getThread().interrupt();
             pool.remove(executionThread);
-            LOGGER.trace("Shutdown " + executionThread);
+            LOGGER.trace("Shutdown {}", executionThread);
         }
         threadPoolMetrics.setAvailableThreads(0);
         threadPoolMetrics.setAvailableThreads(0);
         pool.getLoaned()
                 .forEach(
-                        t -> {
-                            t.setRunning(false);
-                        });
+                        t -> t.setRunning(false));
         pool.getLoaned().clear();
     }
 
