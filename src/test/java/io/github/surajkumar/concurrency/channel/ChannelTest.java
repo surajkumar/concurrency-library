@@ -88,7 +88,7 @@ class ChannelTest {
     }
 
     @Test
-    void testMessageReceived() {
+    void testMessageReceived() throws InterruptedException {
         ChannelObserver<String> observerMock = mock(ChannelObserver.class);
         ChannelObserver<String> senderMock = mock(ChannelObserver.class);
 
@@ -98,10 +98,18 @@ class ChannelTest {
         Channel<String> channel = new Channel<>();
         channel.register(observerMock);
 
+        CountDownLatch latch = new CountDownLatch(numThreads);
+
         for (int i = 0; i < numThreads; i++) {
-            new Thread(() -> channel.sendMessage(Message.createMessage(message, senderMock)))
+            new Thread(
+                            () -> {
+                                channel.sendMessage(Message.createMessage(message, senderMock));
+                                latch.countDown();
+                            })
                     .start();
         }
+
+        latch.await();
 
         Mockito.verify(observerMock, Mockito.times(numThreads))
                 .onMessageReceived(eq(channel), any(Message.class));

@@ -4,8 +4,8 @@ import io.github.surajkumar.concurrency.exceptions.ExecutionMachineShutdownExcep
 import io.github.surajkumar.concurrency.metrics.ThreadPoolMetrics;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Pool object to manage the threads and tracks metrics using the ThreadPoolMetrics class.
  */
 public class FixedThreadPool implements ThreadPool {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FixedThreadPool.class);
+    private static final Logger LOGGER = LogManager.getLogger(FixedThreadPool.class);
     private final ThreadPoolMetrics threadPoolMetrics = new ThreadPoolMetrics();
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final Pool pool;

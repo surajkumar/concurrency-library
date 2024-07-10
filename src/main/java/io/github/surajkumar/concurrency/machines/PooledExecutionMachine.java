@@ -6,15 +6,17 @@ import io.github.surajkumar.concurrency.promise.Promise;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The PooledExecutionMachine class implements the ExecutionMachine interface. It uses a ThreadPool
  * to execute Promise instances.
+ *
+ * @param threadPool The ThreadPool to use for this machine
  */
 public record PooledExecutionMachine(ThreadPool threadPool) implements ExecutionMachine {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PooledExecutionMachine.class);
+    private static final Logger LOGGER = LogManager.getLogger(PooledExecutionMachine.class);
 
     @Override
     public void execute(Promise<?> promise, ExecutionSettings executionSettings) {
