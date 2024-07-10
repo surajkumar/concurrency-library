@@ -127,9 +127,7 @@ public class DynamicThreadPool implements ThreadPool {
         }
         threadPoolMetrics.setAvailableThreads(0);
         threadPoolMetrics.setAvailableThreads(0);
-        pool.getLoaned()
-                .forEach(
-                        t -> t.setRunning(false));
+        pool.getLoaned().forEach(t -> t.setRunning(false));
         pool.getLoaned().clear();
     }
 

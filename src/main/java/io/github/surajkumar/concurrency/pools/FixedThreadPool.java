@@ -75,9 +75,7 @@ public class FixedThreadPool implements ThreadPool {
             LOGGER.trace("Shutdown " + executionThread);
             pool.remove(executionThread);
         }
-        pool.getLoaned()
-                .forEach(
-                        t -> t.setRunning(false));
+        pool.getLoaned().forEach(t -> t.setRunning(false));
         pool.getLoaned().clear();
     }
 

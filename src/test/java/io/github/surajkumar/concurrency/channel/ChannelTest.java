@@ -72,11 +72,11 @@ class ChannelTest {
             userList.add(user);
         }
 
-        userList.forEach(user -> {
-            channel.sendMessage(Message.createMessage(message, user));
-            latch.countDown();
-        });
-
+        userList.forEach(
+                user -> {
+                    channel.sendMessage(Message.createMessage(message, user));
+                    latch.countDown();
+                });
 
         latch.await();
 
@@ -86,6 +86,7 @@ class ChannelTest {
 
         assertEquals(20, size.get());
     }
+
     @Test
     void testMessageReceived() {
         ChannelObserver<String> observerMock = mock(ChannelObserver.class);
@@ -98,7 +99,8 @@ class ChannelTest {
         channel.register(observerMock);
 
         for (int i = 0; i < numThreads; i++) {
-            new Thread(() -> channel.sendMessage(Message.createMessage(message, senderMock))).start();
+            new Thread(() -> channel.sendMessage(Message.createMessage(message, senderMock)))
+                    .start();
         }
 
         Mockito.verify(observerMock, Mockito.times(numThreads))
