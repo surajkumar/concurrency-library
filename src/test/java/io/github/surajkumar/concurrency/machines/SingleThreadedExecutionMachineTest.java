@@ -7,7 +7,7 @@ import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 
 import org.junit.jupiter.api.Test;
 
-public class SingleThreadedExecutionMachineTest {
+class SingleThreadedExecutionMachineTest {
 
     @Test
     void testExecuteWithPromiseAndSettings() {

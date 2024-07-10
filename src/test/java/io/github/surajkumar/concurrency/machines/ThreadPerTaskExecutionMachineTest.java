@@ -8,15 +8,10 @@ import io.github.surajkumar.concurrency.utils.ThreadUtils;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * Test for ThreadPerTaskExecutionMachine class's methods. This class is responsible for executing
- * tasks in separate threads. It includes a crucial method "execute" which accepts a promise and
- * execution settings as parameters.
- */
-public class ThreadPerTaskExecutionMachineTest {
+class ThreadPerTaskExecutionMachineTest {
 
     @Test
-    public void testExecution() {
+    void testExecution() {
         ThreadPerTaskExecutionMachine machine = new ThreadPerTaskExecutionMachine();
         ExecutionSettings settings =
                 new ExecutionSettings()
@@ -64,7 +59,7 @@ public class ThreadPerTaskExecutionMachineTest {
     }
 
     @Test
-    public void testUsesMultipleThreads() {
+    void testUsesMultipleThreads() {
         ThreadPerTaskExecutionMachine machine = new ThreadPerTaskExecutionMachine();
         ExecutionSettings settings =
                 new ExecutionSettings()
