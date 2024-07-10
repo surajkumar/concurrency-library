@@ -47,7 +47,7 @@ public class SingleThreadedExecutionMachine implements ExecutionMachine {
     }
 
     @Override
-    public ThreadPool getThreadPool() {
+    public ThreadPool threadPool() {
         return threadPool;
     }
 

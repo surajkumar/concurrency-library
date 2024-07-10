@@ -24,5 +24,5 @@ public interface ExecutionMachine extends ExecutionThreadWatcher {
      *
      * @return the thread pool
      */
-    ThreadPool getThreadPool();
+    ThreadPool threadPool();
 }

@@ -31,7 +31,7 @@ public class ThreadPerTaskExecutionMachine implements ExecutionMachine {
     }
 
     @Override
-    public ThreadPool getThreadPool() {
+    public ThreadPool threadPool() {
         return null;
     }
 

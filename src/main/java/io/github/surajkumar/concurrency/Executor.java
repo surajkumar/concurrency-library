@@ -85,9 +85,9 @@ public class Executor {
      * pool has already been called, calling this method has no effect.
      */
     public void shutdown() {
-        ThreadPool threadPool = executionMachine.getThreadPool();
+        ThreadPool threadPool = executionMachine.threadPool();
         if (threadPool != null) {
-            executionMachine.getThreadPool().shutdown();
+            executionMachine.threadPool().shutdown();
         }
     }
 }

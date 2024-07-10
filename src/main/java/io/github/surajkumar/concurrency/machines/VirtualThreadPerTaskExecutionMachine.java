@@ -36,7 +36,7 @@ public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
     }
 
     @Override
-    public ThreadPool getThreadPool() {
+    public ThreadPool threadPool() {
         return null;
     }
 
