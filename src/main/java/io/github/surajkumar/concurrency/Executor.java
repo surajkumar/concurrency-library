@@ -7,8 +7,8 @@ import io.github.surajkumar.concurrency.pools.ThreadPool;
 import io.github.surajkumar.concurrency.promise.Promise;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * ExecutionMachine. It provides various methods for running promises and managing their execution.
  */
 public class Executor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Executor.class);
+    private static final Logger LOGGER = LogManager.getLogger(Executor.class);
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final ExecutionMachine executionMachine;
 
@@ -85,9 +85,9 @@ public class Executor {
      * pool has already been called, calling this method has no effect.
      */
     public void shutdown() {
-        ThreadPool threadPool = executionMachine.getThreadPool();
+        ThreadPool threadPool = executionMachine.threadPool();
         if (threadPool != null) {
-            executionMachine.getThreadPool().shutdown();
+            executionMachine.threadPool().shutdown();
         }
     }
 }

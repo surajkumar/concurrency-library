@@ -7,7 +7,7 @@ import io.github.surajkumar.concurrency.threads.ExecutionThread;
 
 import org.junit.jupiter.api.Test;
 
-public class DynamicThreadPoolTest {
+class DynamicThreadPoolTest {
     @Test
     void testBorrowAndReturn() {
         DynamicThreadPool threadPool = new DynamicThreadPool(2);
@@ -43,7 +43,7 @@ public class DynamicThreadPoolTest {
     }
 
     @Test
-    void testPoolScaling() throws InterruptedException {
+    void testPoolScaling() {
         DynamicThreadPool threadPool =
                 new DynamicThreadPool(
                         2,
@@ -53,13 +53,9 @@ public class DynamicThreadPoolTest {
                                 .setScaleUpAmount(2)
                                 .setScaleDownAmount(2));
 
-        ExecutionThread firstThread = threadPool.borrow();
-        ExecutionThread secondThread = threadPool.borrow();
+        threadPool.borrow();
+        threadPool.borrow();
         ExecutionThread thirdThread = threadPool.borrow();
-
-        // Scaling should kick on the third borrow, so it goes up by 2 but then available is 1
-        // because
-        // we just borrowed
 
         assertEquals(1, threadPool.getMetrics().getAvailableThreads());
         assertEquals(3, threadPool.getMetrics().getActiveThreads());
@@ -78,13 +74,12 @@ public class DynamicThreadPoolTest {
         DynamicThreadPool threadPool = new DynamicThreadPool(2, poolOptions);
 
         ExecutionThread firstThread = threadPool.borrow();
-        ExecutionThread secondThread = threadPool.borrow();
+        threadPool.borrow();
         assertEquals(0, threadPool.getMetrics().getAvailableThreads());
         assertEquals(2, threadPool.getMetrics().getActiveThreads());
         threadPool.returnToPool(firstThread);
-        ExecutionThread thirdThread = threadPool.borrow();
+        threadPool.borrow();
 
-        // pool should now be empty as scaling is disabled
         assertEquals(0, threadPool.getMetrics().getAvailableThreads());
         assertEquals(2, threadPool.getMetrics().getActiveThreads());
     }

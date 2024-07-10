@@ -14,15 +14,10 @@ import io.github.surajkumar.concurrency.threads.ExecutionThread;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-/**
- * The PooledExecutionMachineTest class tests the functionalities of the PooledExecutionMachine
- * class.
- */
-public class PooledExecutionMachineTest {
+class PooledExecutionMachineTest {
 
     @Test
-    public void execute_WhenExecutionThreadIsAvailable_ShouldQueuePromiseForExecution() {
-        // Arrange
+    void execute_WhenExecutionThreadIsAvailable_ShouldQueuePromiseForExecution() {
         ThreadPool mockThreadPool = Mockito.mock(ThreadPool.class);
         Promise<?> mockPromise = Mockito.mock(Promise.class);
         ExecutionSettings executionSettings = new ExecutionSettings();
@@ -31,17 +26,14 @@ public class PooledExecutionMachineTest {
         when(mockThreadPool.borrow()).thenReturn(mockExecutionThread);
         PooledExecutionMachine pooledExecutionMachine = new PooledExecutionMachine(mockThreadPool);
 
-        // Act
         pooledExecutionMachine.execute(mockPromise, executionSettings);
 
-        // Assert
         verify(mockExecutionThread, times(1)).queuePromise(mockPromise, executionSettings);
         verify(mockExecutionThread, times(1)).addWatcher(pooledExecutionMachine);
     }
 
     @Test
-    public void
-            execute_WhenNoExecutionThreadIsAvailable_ShouldThrowNoExecutionThreadAvailableException() {
+    void execute_WhenNoExecutionThreadIsAvailable_ShouldThrowNoExecutionThreadAvailableException() {
         ThreadPool mockThreadPool = Mockito.mock(ThreadPool.class);
         Promise<?> mockPromise = Mockito.mock(Promise.class);
         ExecutionSettings executionSettings = new ExecutionSettings();
@@ -57,10 +49,10 @@ public class PooledExecutionMachineTest {
     }
 
     @Test
-    public void testOnPromiseCompleteInStandardCase() {
+    void testOnPromiseCompleteInStandardCase() {
         ThreadPool threadPoolMock = Mockito.mock(ThreadPool.class);
         PooledExecutionMachine pooledMachine = new PooledExecutionMachine(threadPoolMock);
-        Promise promiseMock = Mockito.mock(Promise.class);
+        Promise<?> promiseMock = Mockito.mock(Promise.class);
         ExecutionThread executionThreadMock = Mockito.mock(ExecutionThread.class);
 
         pooledMachine.onPromiseComplete(promiseMock, executionThreadMock);
@@ -70,16 +62,13 @@ public class PooledExecutionMachineTest {
     }
 
     @Test
-    public void testOnPromiseCompleteWithNullThread() {
-        // Create mock objects for testing
+    void testOnPromiseCompleteWithNullThread() {
         ThreadPool threadPoolMock = Mockito.mock(ThreadPool.class);
         PooledExecutionMachine pooledMachine = new PooledExecutionMachine(threadPoolMock);
-        Promise promiseMock = Mockito.mock(Promise.class);
+        Promise<?> promiseMock = Mockito.mock(Promise.class);
 
         assertThrows(
                 NullPointerException.class,
-                () -> {
-                    pooledMachine.onPromiseComplete(promiseMock, null);
-                });
+                () -> pooledMachine.onPromiseComplete(promiseMock, null));
     }
 }

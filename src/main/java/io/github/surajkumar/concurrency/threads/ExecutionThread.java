@@ -4,8 +4,8 @@ import io.github.surajkumar.concurrency.exceptions.ExecutionThreadRetiredExcepti
 import io.github.surajkumar.concurrency.metrics.ExecutionThreadMetrics;
 import io.github.surajkumar.concurrency.promise.Promise;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * interface and provides methods to manage the execution and lifecycle of the thread.
  */
 public class ExecutionThread implements Runnable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionThread.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExecutionThread.class);
     private final AtomicBoolean running = new AtomicBoolean(true);
     private final BlockingQueue<ExecutionPair> queue = new LinkedBlockingQueue<>();
     private final List<ExecutionThreadWatcher> watchers = new CopyOnWriteArrayList<>();
@@ -41,7 +41,7 @@ public class ExecutionThread implements Runnable {
      */
     @Override
     public void run() {
-        LOGGER.trace(this + " running");
+        LOGGER.trace("{} running", this);
         while (running.get() && !thread.isInterrupted()) {
             ExecutionPair executionPair;
             try {
@@ -51,8 +51,8 @@ public class ExecutionThread implements Runnable {
                 running.set(false);
                 return;
             }
-            Promise<?> promise = executionPair.getPromise();
-            ExecutionSettings executionSettings = executionPair.getExecutionSettings();
+            Promise<?> promise = executionPair.promise();
+            ExecutionSettings executionSettings = executionPair.executionSettings();
             metrics.incrementTotalPromises();
             LOGGER.trace("Running promise {}", promise);
             notifyWatcherOfRunning(promise);
@@ -219,7 +219,7 @@ public class ExecutionThread implements Runnable {
 
     @Override
     public String toString() {
-        if(thread != null) {
+        if (thread != null) {
             return thread.getName();
         } else {
             return "ExecutionThread";

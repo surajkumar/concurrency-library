@@ -8,8 +8,8 @@ import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
 import io.github.surajkumar.concurrency.threads.ExecutionVirtualThread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The VirtualThreadPerTaskExecutionMachine class represents an execution machine that creates a
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(VirtualThreadPerTaskExecutionMachine.class);
+            LogManager.getLogger(VirtualThreadPerTaskExecutionMachine.class);
 
     /**
      * The VirtualThreadPerTaskExecutionMachine class represents an execution machine that creates a
@@ -36,7 +36,7 @@ public class VirtualThreadPerTaskExecutionMachine implements ExecutionMachine {
     }
 
     @Override
-    public ThreadPool getThreadPool() {
+    public ThreadPool threadPool() {
         return null;
     }
 

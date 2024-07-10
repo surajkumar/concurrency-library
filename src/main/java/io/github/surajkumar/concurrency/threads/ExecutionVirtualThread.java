@@ -3,8 +3,8 @@ package io.github.surajkumar.concurrency.threads;
 import io.github.surajkumar.concurrency.metrics.ExecutionThreadMetrics;
 import io.github.surajkumar.concurrency.promise.Promise;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * virtual thread.
  */
 public class ExecutionVirtualThread extends ExecutionThread {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExecutionVirtualThread.class);
+    private static final Logger LOGGER = LogManager.getLogger(ExecutionVirtualThread.class);
     private final List<ExecutionThreadWatcher> watchers = new CopyOnWriteArrayList<>();
     private final ExecutionThreadMetrics metrics = new ExecutionThreadMetrics();
     private final ExecutionPair executionPair;
@@ -42,8 +42,8 @@ public class ExecutionVirtualThread extends ExecutionThread {
     @Override
     public void run() {
         LOGGER.trace(this + " running");
-        Promise<?> promise = executionPair.getPromise();
-        ExecutionSettings executionSettings = executionPair.getExecutionSettings();
+        Promise<?> promise = executionPair.promise();
+        ExecutionSettings executionSettings = executionPair.executionSettings();
         metrics.incrementTotalPromises();
         LOGGER.trace("Running promise {}", promise);
         notifyWatcherOfRunning(promise);

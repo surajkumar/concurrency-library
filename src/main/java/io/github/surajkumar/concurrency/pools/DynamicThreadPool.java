@@ -8,8 +8,8 @@ import io.github.surajkumar.concurrency.promise.Promise;
 import io.github.surajkumar.concurrency.threads.ExecutionSettings;
 import io.github.surajkumar.concurrency.threads.ExecutionThread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * pool options.
  */
 public class DynamicThreadPool implements ThreadPool {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DynamicThreadPool.class);
+    private static final Logger LOGGER = LogManager.getLogger(DynamicThreadPool.class);
     private static final int DEFAULT_INITIAL_CAPACITY = 2;
     private static final int DEFAULT_SCALE =
             Math.max(Runtime.getRuntime().availableProcessors() / 2, 1);
@@ -123,15 +123,11 @@ public class DynamicThreadPool implements ThreadPool {
             executionThread.setRunning(false);
             executionThread.getThread().interrupt();
             pool.remove(executionThread);
-            LOGGER.trace("Shutdown " + executionThread);
+            LOGGER.trace("Shutdown {}", executionThread);
         }
         threadPoolMetrics.setAvailableThreads(0);
         threadPoolMetrics.setAvailableThreads(0);
-        pool.getLoaned()
-                .forEach(
-                        t -> {
-                            t.setRunning(false);
-                        });
+        pool.getLoaned().forEach(t -> t.setRunning(false));
         pool.getLoaned().clear();
     }
 
